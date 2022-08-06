@@ -1,0 +1,66 @@
+using UnityEngine;
+
+namespace Combustion.Player
+{
+	public class PlayerController : MonoBehaviour
+	{
+		public static PlayerController Instance { get; private set; }
+
+		private Rigidbody2D rb;
+
+		private float x, y;
+
+		[SerializeField]
+		private float speed;
+
+		public float HP { get; private set; }
+		public float MaxHP { get; private set; }
+
+		private void Start() {
+			Instance = this;
+
+			rb = GetComponent<Rigidbody2D>();
+		}
+
+		private void Update() {
+			GetInput();
+		}
+
+		private void GetInput() {
+			x = Input.GetAxisRaw("Horizontal");
+
+			if (x > 0.5)
+			{
+				x = 1;
+			}
+			else if (x < -0.5)
+			{
+				x = -1;
+			}
+			else
+			{
+				x = 0;
+			}
+
+			y = Input.GetAxisRaw("Vertical");
+
+			if (y > 0.5)
+			{
+				y = 1;
+			}
+			else if (y < -0.5)
+			{
+				y = -1;
+			}
+			else
+			{
+				y = 0;
+			}
+		}
+
+		private void FixedUpdate() {
+			rb.velocity = new Vector2(x * speed, y * speed);
+		}
+	}
+
+}
