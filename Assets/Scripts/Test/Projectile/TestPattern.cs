@@ -27,16 +27,7 @@ public class TestPattern : Pattern
 	private int nextProjectile = 0;
 
 	public override void Spawn() {
-		delayCounter = delayTime;
-
-		nextProjectile = 1;
-
-		foreach (Projectile proj in Projectiles)
-		{
-			Destroy(proj.gameObject);
-		}
-
-		Projectiles = new List<Projectile>();
+		Reset();
 		
 		for (int i = 0; i < numProjectiles; i++)
 		{
@@ -54,13 +45,21 @@ public class TestPattern : Pattern
 		}
 	}
 
+	public override void Reset() {
+		delayCounter = delayTime;
+
+		nextProjectile = 1;
+		base.Reset();
+	}
+
 	public override void Update() {
+
 		for (int i = 0; i < nextProjectile; i++)
 		{
 			Projectiles[i].Move();
 		}
 
-		if (delayCounter <= 0 && nextProjectile < numProjectiles)
+		if (delayCounter <= 0 && nextProjectile < Projectiles.Count)
 		{
 			nextProjectile++;
 			delayCounter = delayTime;
@@ -68,5 +67,4 @@ public class TestPattern : Pattern
 
 		delayCounter -= Time.deltaTime;
 	}
-
 }

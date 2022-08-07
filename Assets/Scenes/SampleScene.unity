@@ -685,7 +685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPattern: {fileID: 0}
-  turnState: 1
+  turnStateText: {fileID: 1130519415}
+  turnState: 0
 --- !u!1 &485105936
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,9 +771,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1118821281}
-        m_TargetAssemblyTypeName: TestArena, Assembly-CSharp
-        m_MethodName: SwitchTurnState
+      - m_Target: {fileID: 449046420}
+        m_TargetAssemblyTypeName: Combustion.Battle.BattleManager, Assembly-CSharp
+        m_MethodName: AdvanceTurnState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

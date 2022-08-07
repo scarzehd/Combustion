@@ -12,5 +12,14 @@ namespace Combustion.Projectile
 		public virtual void Spawn() { }
 		
 		public virtual void Update() { }
+
+		public virtual void Reset() {
+			foreach (Projectile proj in Projectiles)
+			{
+				Destroy(proj.gameObject);
+			}
+
+			Projectiles = new List<Projectile>();
+		}
 	}
 }

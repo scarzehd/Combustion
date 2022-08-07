@@ -31,16 +31,7 @@ public class TestPattern2 : Pattern
 	private int currentProjectile;
 
 	public override void Spawn() {
-		delayCounter = delayTime;
-
-		currentProjectile = 0;
-
-		foreach (Projectile proj in Projectiles)
-		{
-			Destroy(proj.gameObject);
-		}
-
-		Projectiles = new List<Projectile>();
+		Reset();
 
 		for (int i = 0; i < numProjectiles; i++)
 		{
@@ -49,6 +40,14 @@ public class TestPattern2 : Pattern
 			Projectile proj = TestProjectile2.Spawn(this, projectileSprite, 3f + (delayTime * numProjectiles), pos, Vector2.right, projectileSpeed, projectileAcceleration);
 			Projectiles.Add(proj);
 		}
+	}
+
+	public override void Reset() {
+		delayCounter = delayTime;
+
+		currentProjectile = 0;
+		
+		base.Reset();
 	}
 
 	private Vector2 CalculateTrackPosition() {
