@@ -6,14 +6,15 @@ namespace Combustion.Projectile
 {
 	public abstract class Pattern : ScriptableObject
 	{
-
 		public List<Projectile> Projectiles = new List<Projectile>();
+
+		public bool IsActive => Projectiles.Count > 0;
 
 		public virtual void Spawn() { }
 		
 		public virtual void Update() { }
 
-		public virtual void Reset() {
+		public virtual void Despawn() {
 			foreach (Projectile proj in Projectiles)
 			{
 				Destroy(proj.gameObject);

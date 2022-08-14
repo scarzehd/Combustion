@@ -31,7 +31,7 @@ public class TestPattern2 : Pattern
 	private int currentProjectile;
 
 	public override void Spawn() {
-		Reset();
+		Despawn();
 
 		for (int i = 0; i < numProjectiles; i++)
 		{
@@ -42,12 +42,12 @@ public class TestPattern2 : Pattern
 		}
 	}
 
-	public override void Reset() {
+	public override void Despawn() {
 		delayCounter = delayTime;
 
 		currentProjectile = 0;
 		
-		base.Reset();
+		base.Despawn();
 	}
 
 	private Vector2 CalculateTrackPosition() {

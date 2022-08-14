@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 
 using Combustion.Projectile;
+using Combustion.Battle.Nodes;
+
 namespace Combustion.Battle
 {
     public class BattleManager : MonoBehaviour
@@ -15,6 +17,8 @@ namespace Combustion.Battle
 		[SerializeField]
 		private TextMeshProUGUI turnStateText;
 
+		public BattleTree tree;
+
 		// Start is called before the first frame update
 		void Start() {
 			Instance = this;
@@ -23,7 +27,13 @@ namespace Combustion.Battle
         // Update is called once per frame
         void Update() {
 			if (turnState == TurnState.Enemy && currentPattern != null) {
-				currentPattern.Update();
+				if (currentPattern.IsActive)
+				{
+					currentPattern.Update();
+				} else
+				{
+					AdvanceTurnState();
+				}
 			}
         }
 
@@ -49,15 +59,22 @@ namespace Combustion.Battle
 			}
 		}
 
-		private void StartPlayerTurn() { }
+		private void StartPlayerTurn() {
+			currentPattern.Despawn();
+			ArenaController.Instance.MoveAndScaleArena(ArenaController.Instance.textArenaPosition, ArenaController.Instance.textArenaSize, 1f);
+		}
 
 		private void StartEnemyTurn() {
-			SpawnRandomPattern();
+			if (currentPattern != null)
+				currentPattern.Despawn();
+
+			currentPattern = tree.ChoosePattern();
+			currentPattern.Spawn();
 		}
 
 		public void SpawnRandomPattern() {
 			if (currentPattern != null)
-				currentPattern.Reset();
+				currentPattern.Despawn();
 			Pattern[] patterns = Resources.LoadAll<Pattern>("Patterns");
 			currentPattern = patterns[Random.Range(0, patterns.Length)];
 			currentPattern.Spawn();

@@ -27,6 +27,9 @@ namespace Combustion.Battle
 		[SerializeField]
 		private float edgeCorrection;
 
+		public Vector2 textArenaSize;
+		public Vector2 textArenaPosition;
+
 		private void Awake() {
 			Instance = this;
 
@@ -142,6 +145,10 @@ namespace Combustion.Battle
 			desiredY = y;
 		}
 
+		public void MoveArena(Vector2 position, float duration, bool immediate = false) {
+			MoveArena(position.x, position.y, duration, immediate);
+		}
+
 		public void ScaleArena(float width, float height, float duration, bool immediate = false) {
 			originalWidth = ren.size.x;
 			originalHeight = ren.size.y;
@@ -151,9 +158,17 @@ namespace Combustion.Battle
 			desiredHeight = height;
 		}
 
+		public void ScaleArena(Vector2 scale, float duration, bool immediate = false) {
+			ScaleArena(scale.x, scale.y, duration, immediate);
+		}
+
 		public void MoveAndScaleArena(float x, float y, float width, float height, float duration, bool immediate = false) {
 			MoveArena(x, y, duration, immediate);
 			ScaleArena(width, height, duration, immediate);
+		}
+
+		public void MoveAndScaleArena(Vector2 position, Vector2 scale, float duration, bool immediate = false) {
+			MoveAndScaleArena(position.x, position.y, scale.x, scale.y, duration, immediate);
 		}
 	}
 }

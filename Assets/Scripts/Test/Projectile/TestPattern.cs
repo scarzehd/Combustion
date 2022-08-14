@@ -27,7 +27,7 @@ public class TestPattern : Pattern
 	private int nextProjectile = 0;
 
 	public override void Spawn() {
-		Reset();
+		Despawn();
 		
 		for (int i = 0; i < numProjectiles; i++)
 		{
@@ -40,20 +40,19 @@ public class TestPattern : Pattern
 
 			Vector2 direction = -(pos - playerPos).normalized;
 
-			Projectile proj = TestProjectile.Spawn(this, projectileSprite, 1f + (numProjectiles * delayTime), pos, direction, projectileSpeed);
+			Projectile proj = TestProjectile.Spawn(this, projectileSprite, 2f + (numProjectiles * delayTime), pos, direction, projectileSpeed);
 			Projectiles.Add(proj);
 		}
 	}
 
-	public override void Reset() {
+	public override void Despawn() {
 		delayCounter = delayTime;
 
 		nextProjectile = 1;
-		base.Reset();
+		base.Despawn();
 	}
 
 	public override void Update() {
-
 		for (int i = 0; i < nextProjectile; i++)
 		{
 			Projectiles[i].Move();
