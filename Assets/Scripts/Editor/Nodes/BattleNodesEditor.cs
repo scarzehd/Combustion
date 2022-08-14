@@ -11,7 +11,6 @@ namespace Combustion.Editor.Nodes
     public class BattleNodesEditor : EditorWindow
     {
         BattleNodesGraphView graphView;
-        InspectorView inspectorView;
 
         [MenuItem("Window/Combustion/Battle Nodes Editor")]
         public static void OpenWindow() {
@@ -33,7 +32,6 @@ namespace Combustion.Editor.Nodes
             root.styleSheets.Add(styleSheet);
 
             graphView = root.Q<BattleNodesGraphView>();
-            inspectorView = root.Q<InspectorView>();
             graphView.OnNodeSelected = OnNodeSelectionChanged;
             OnSelectionChange();
         }
@@ -47,7 +45,6 @@ namespace Combustion.Editor.Nodes
         }
 
 		void OnNodeSelectionChanged(NodeView node) {
-            inspectorView.UpdateSelection(node);
 		}
     }
 }
