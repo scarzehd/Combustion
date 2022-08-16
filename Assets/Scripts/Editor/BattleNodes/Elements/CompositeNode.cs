@@ -21,15 +21,23 @@ namespace Combustion.Editor.BattleNodes.Elements
 		public override void Draw() {
 			base.Draw();
 
-			Button addPortButton = BattleElementUtilities.CreateButton("+");
+			Button addPortButton = BattleElementUtilities.CreateButton("+", () => {
+				Connections++;
+
+				Port port = this.CreatePort();
+
+				Button deletePortButton = BattleElementUtilities.CreateButton("X");
+
+				port.Add(deletePortButton);
+
+				outputContainer.Add(port);
+			});
 
 			mainContainer.Insert(1, addPortButton);
 
 			for (int i = 0; i < Connections; i++)
 			{
-				Port port = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
-
-				port.portName = "";
+				Port port = this.CreatePort();
 
 				Button deletePortButton = BattleElementUtilities.CreateButton("X");
 

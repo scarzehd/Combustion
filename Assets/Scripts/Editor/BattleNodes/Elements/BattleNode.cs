@@ -23,9 +23,11 @@ namespace Combustion.Editor.BattleNodes.Elements
 		public virtual void Draw() {
 			TextField nodeNameTextField = BattleElementUtilities.CreateTextField(NodeName);
 
-			nodeNameTextField.AddToClassList("battle-node__textfield");
-			nodeNameTextField.AddToClassList("battle-node__textfield__hidden");
-			nodeNameTextField.AddToClassList("battle-node__filename-textfield");
+			nodeNameTextField.AddClasses(
+				"battle-node__textfield",
+				"battle-node__textfield__hidden",
+				"battle-node__filename-textfield"
+			);
 
 			titleContainer.Insert(0, nodeNameTextField);
 

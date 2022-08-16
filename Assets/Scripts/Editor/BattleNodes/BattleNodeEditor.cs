@@ -2,7 +2,6 @@ using System;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-
 namespace Combustion.Editor.BattleNodes
 {
 	public class BattleNodeEditor : EditorWindow

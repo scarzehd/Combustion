@@ -7,15 +7,29 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 using Combustion.Editor.BattleNodes.Elements;
+using Combustion.Editor.BattleNodes.Utilities;
 
 namespace Combustion.Editor.BattleNodes
 {
 	public class BattleNodeGraphView : GraphView
 	{
+		private BattleNodeSearchWindow searchWindow;
 		public BattleNodeGraphView() {
 			AddGridBackground();
 			AddStyles();
 			AddManipulators();
+
+			AddSearchWindow();
+		}
+
+		private void AddSearchWindow() {
+			if (searchWindow == null)
+			{
+				searchWindow = ScriptableObject.CreateInstance<BattleNodeSearchWindow>();
+				searchWindow.Initialize(this);
+			}
+
+			nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
 		}
 
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) {
@@ -32,7 +46,7 @@ namespace Combustion.Editor.BattleNodes
 			return compatiblePorts;
 		}
 
-		private BattleNode CreateNode(Type type, Vector2 position) {
+		public BattleNode CreateNode(Type type, Vector2 position) {
 			BattleNode node = Activator.CreateInstance(type) as BattleNode;
 
 			node.Initialize(position);
@@ -64,11 +78,11 @@ namespace Combustion.Editor.BattleNodes
 		public override void BuildContextualMenu(ContextualMenuPopulateEvent evt) {
 			base.BuildContextualMenu(evt);
 
-			evt.menu.AppendAction("Add Node", actionEvent => AddElement(CreateNode(typeof(BattleNode), actionEvent.eventInfo.mousePosition)));
-			evt.menu.AppendAction("Add Pattern Node", actionEvent => AddElement(CreateNode(typeof(PatternNode), actionEvent.eventInfo.mousePosition)));
-			evt.menu.AppendAction("Add Composite Node", actionEvent => AddElement(CreateNode(typeof(CompositeNode), actionEvent.eventInfo.mousePosition)));
+			evt.menu.AppendAction("Add Node", actionEvent => AddElement(CreateNode(typeof(BattleNode), GetLocalMousePosition(actionEvent.eventInfo.mousePosition))));
+			evt.menu.AppendAction("Add Pattern Node", actionEvent => AddElement(CreateNode(typeof(PatternNode), GetLocalMousePosition(actionEvent.eventInfo.mousePosition))));
+			evt.menu.AppendAction("Add Composite Node", actionEvent => AddElement(CreateNode(typeof(CompositeNode), GetLocalMousePosition(actionEvent.eventInfo.mousePosition))));
 
-			evt.menu.AppendAction("Add Group", actionEvent => AddElement(CreateGroup("Node Group", actionEvent.eventInfo.mousePosition)));
+			evt.menu.AppendAction("Add Group", actionEvent => AddElement(CreateGroup("Node Group", GetLocalMousePosition(actionEvent.eventInfo.mousePosition))));
 		}
 
 		private void AddGridBackground() {
@@ -78,11 +92,18 @@ namespace Combustion.Editor.BattleNodes
 			Insert(0, gridBackground);
 		}
 		private void AddStyles() {
-			StyleSheet graphViewStyleSheet = (StyleSheet) EditorGUIUtility.Load("BattleNodes/BattleNodeGraphViewStyles.uss");
-			StyleSheet nodeStyleSheet = (StyleSheet)EditorGUIUtility.Load("BattleNodes/BattleNodeStyles.uss");
+			this.AddStyleSheets(
+				"BattleNodes/BattleNodeGraphViewStyles.uss",
+				"BattleNodes/BattleNodeStyles.uss"
+			);
+		}
 
-			styleSheets.Add(graphViewStyleSheet);
-			styleSheets.Add(nodeStyleSheet);
+		public Vector2 GetLocalMousePosition(Vector2 mousePosition) {
+			Vector2 worldMousePosition = mousePosition;
+
+			Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
+
+			return localMousePosition;
 		}
 	}
 }

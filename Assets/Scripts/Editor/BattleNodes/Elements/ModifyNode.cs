@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Combustion.Editor.BattleNodes.Elements
 {
-	public class SequenceNode : CompositeNode
+	public class ModifyNode : BattleNode
 	{
 	}
 }
