@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion.Editor.BattleNodes.Elements
+namespace Combustion.BattleNodes.Elements
 {
 	public class ModifyNode : BattleNode
 	{

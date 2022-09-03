@@ -1,4 +1,3 @@
-using Combustion.Editor.BattleNodes.Elements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +5,10 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace Combustion.Editor.BattleNodes
+namespace Combustion.BattleNodes
 {
+	using Elements;
+
 	public class BattleNodeSearchWindow : ScriptableObject, ISearchWindowProvider
 	{
 		private BattleNodeGraphView graphView;
@@ -70,11 +71,24 @@ namespace Combustion.Editor.BattleNodes
 				}
 			}
 
+			searchTreeEntries.Add(new SearchTreeEntry(new GUIContent("Node Group"))
+			{
+				level = 1,
+				userData = typeof(BattleGroup)
+			});
+
 			return searchTreeEntries;
 		}
 
 		public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context) {
-			BattleNode battleNode = graphView.CreateNode(searchTreeEntry.userData as Type, context.screenMousePosition);
+			if (searchTreeEntry.userData as Type == typeof(BattleGroup))
+			{
+				graphView.CreateGroup("Group", graphView.GetLocalMousePosition(context.screenMousePosition, true));
+
+				return true;
+			}
+			
+			BattleNode battleNode = graphView.CreateNode(searchTreeEntry.userData as Type, graphView.GetLocalMousePosition(context.screenMousePosition, true));
 
 			graphView.AddElement(battleNode);
 

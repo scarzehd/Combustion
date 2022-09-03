@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Combustion.Projectile;
 using UnityEngine.UIElements;
 
-namespace Combustion.Editor.BattleNodes.Elements
+namespace Combustion.BattleNodes.Elements
 {
+	using Projectile;
+
 	public class PatternNode : ActionNode
 	{
 		public Pattern Pattern { get; set; }

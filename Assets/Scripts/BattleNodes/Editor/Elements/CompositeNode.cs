@@ -4,16 +4,16 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-using Combustion.Editor.BattleNodes.Utilities;
-
-namespace Combustion.Editor.BattleNodes.Elements
+namespace Combustion.BattleNodes.Elements
 {
+	using Utilities;
+
 	public class CompositeNode : BattleNode
 	{
 		public int Connections { get; set; }
 
-		public override void Initialize(Vector2 position) {
-			base.Initialize(position);
+		public override void Initialize(BattleNodeGraphView graphView, Vector2 position) {
+			base.Initialize(graphView, position);
 
 			Connections = 1;
 		}

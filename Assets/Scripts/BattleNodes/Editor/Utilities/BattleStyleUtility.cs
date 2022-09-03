@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Combustion.Editor.BattleNodes.Utilities
+namespace Combustion.BattleNodes.Utilities
 {
 	public static class BattleStyleUtility {
 		public static VisualElement AddClasses(this VisualElement element, params string[] classNames) {

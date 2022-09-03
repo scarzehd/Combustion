@@ -1,4 +1,3 @@
-using Combustion.Editor.BattleNodes.Elements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,14 +5,17 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Combustion.Editor.BattleNodes.Utilities
+namespace Combustion.BattleNodes.Utilities
 {
+	using Elements;
+
 	public static class BattleElementUtilities
 	{
-		public static TextField CreateTextField(string value = null, EventCallback<ChangeEvent<string>> onValueChanged = null) {
+		public static TextField CreateTextField(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null) {
 			TextField textField = new TextField()
 			{
-				value = value
+				value = value,
+				label = label
 			};
 
 			if (onValueChanged != null)
