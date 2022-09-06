@@ -15,9 +15,6 @@ namespace Combustion.Battle
 
 		public Pattern currentPattern;
 
-		[SerializeField]
-		private bool debugMode;
-
 		// Start is called before the first frame update
 		protected virtual void Start() {
 			Instance = this;
@@ -31,8 +28,6 @@ namespace Combustion.Battle
 					currentPattern.Update();
 				}
 			}
-
-			MenuController.Instance.SetDebug(debugMode);
 		}
 
 		public TurnState turnState = TurnState.Player;
@@ -46,19 +41,11 @@ namespace Combustion.Battle
 			if (turnState == TurnState.Player)
 			{
 				turnState = TurnState.Enemy;
-				if (debugMode)
-				{
-					MenuController.Instance.turnStateLabel.text = "Enemy Turn";
-				}
 				StartEnemyTurn();
 			}
 			else
 			{
 				turnState = TurnState.Player;
-				if (debugMode)
-				{
-					MenuController.Instance.turnStateLabel.text = "Player Turn";
-				}
 				StartPlayerTurn();
 			}
 		}
@@ -67,7 +54,7 @@ namespace Combustion.Battle
 			currentPattern.Despawn();
 			ArenaController.Instance.MoveAndScaleArena(ArenaController.Instance.textArenaPosition, ArenaController.Instance.textArenaSize, 1f);
 
-			MenuController.Instance.buttonBar.SetEnabled(true);
+			MenuController.Instance.ButtonBar.SetEnabled(true);
 		}
 
 		protected virtual void StartEnemyTurn() {
@@ -76,7 +63,7 @@ namespace Combustion.Battle
 
 			SpawnRandomPattern();
 
-			MenuController.Instance.buttonBar.SetEnabled(false);
+			MenuController.Instance.ButtonBar.SetEnabled(false);
 		}
 
 		public void SpawnRandomPattern() {

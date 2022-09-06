@@ -1,8 +1,9 @@
 .hidden {
     display: none;
+    width: 100%;
 }
 
-Button.game {
+Button {
     background-image: url('project://database/Assets/Sprites/arena.png?fileID=21300000&guid=8af96b52fd610e04d9a3029a8cff6ee0&type=3#arena');
     background-color: rgba(0, 0, 0, 0);
     border-left-width: 0;
@@ -18,49 +19,33 @@ Button.game {
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
     width: 15%;
-    -unity-font: url('project://database/Assets/Fonts/DTM-Mono.otf?fileID=12800000&guid=89f75275511a01f4c8951f798700f8a1&type=3#DTM-Mono');
-    font-size: 20px;
-    -unity-font-definition: url('project://database/Assets/Fonts/DTM-Mono%20SDF.asset?fileID=11400000&guid=95c8213316670c144850869dd87d2038&type=2#DTM-Mono SDF');
-    color: rgba(255, 255, 255, 255);
     transition-duration: 0.5s;
-}
-
-Button.debug {
-    width: 50%;
-    border-left-color: rgba(40, 40, 40, 255);
-    border-right-color: rgba(40, 40, 40, 255);
-    border-top-color: rgba(40, 40, 40, 255);
-    border-bottom-color: rgba(40, 40, 40, 255);
-    border-left-width: 5px;
-    border-right-width: 5px;
-    border-top-width: 5px;
-    border-bottom-width: 5px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    font-size: 15px;
-}
-
-Label.debug {
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-    -unity-text-align: middle-center;
-    width: 100%;
-    height: 10%;
+    font-size: 50px;
+    -unity-font: url('project://database/Assets/Fonts/DTM-Mono.otf?fileID=12800000&guid=89f75275511a01f4c8951f798700f8a1&type=3#DTM-Mono');
+    -unity-font-definition: url('project://database/Assets/Fonts/DTM-Mono%20SDF.asset?fileID=11400000&guid=95c8213316670c144850869dd87d2038&type=2#DTM-Mono SDF');
+    -unity-font-style: bold;
+    color: rgba(255, 255, 255, 255);
+    transition-property: translate;
 }
 
 .gameButtons {
     flex-direction: row;
     justify-content: space-around;
-    width: 60%;
-    height: 25%;
+    width: 100%;
+    height: 30%;
     transition-property: opacity, translate;
     transition-duration: 0.5s, 0.5s;
     transition-timing-function: ease, ease-in-out;
     top: 25%;
+    max-width: 100%;
+    min-width: 700px;
 }
 
 .gameButtons:disabled {
     translate: 0 200px;
+}
+
+Button:focus {
+    -unity-background-image-tint-color: rgba(253, 255, 0, 255);
+    color: rgba(253, 255, 0, 255);
 }

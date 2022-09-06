@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Combustion.Player
 {
@@ -10,6 +11,8 @@ namespace Combustion.Player
 
 		private float x, y;
 
+		private PlayerInput playerInput;
+
 		[SerializeField]
 		private float speed;
 
@@ -20,6 +23,8 @@ namespace Combustion.Player
 			Instance = this;
 
 			rb = GetComponent<Rigidbody2D>();
+
+			playerInput = GetComponent<PlayerInput>();
 		}
 
 		private void Update() {
@@ -27,7 +32,9 @@ namespace Combustion.Player
 		}
 
 		private void GetInput() {
-			x = Input.GetAxisRaw("Horizontal");
+			Vector2 input = playerInput.actions["Move"].ReadValue<Vector2>();
+
+			x = input.x;
 
 			if (x > 0.5)
 			{
@@ -42,7 +49,7 @@ namespace Combustion.Player
 				x = 0;
 			}
 
-			y = Input.GetAxisRaw("Vertical");
+			y = input.y;
 
 			if (y > 0.5)
 			{

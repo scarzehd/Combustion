@@ -15,66 +15,108 @@ namespace Combustion.UI
         public new class UxmlFactory : UxmlFactory<MenuController, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
-        //Debug ui
-        public Label turnStateLabel;
-
-        public Button switchTurnButton;
-
-        private bool currentDebug = true;
-
         //Game ui
-        public VisualElement buttonBar;
+        public VisualElement ButtonBar { get; private set; }
 
-        public Button fightButton;
+        private Button fightButton;
 
-        public Button magicButton;
+        private Button magicButton;
 
-        public Button actButton;
+        private Button actButton;
 
-        public Button itemButton;
+        private Button itemButton;
 
-        public Button defendButton;
+        private Button defendButton;
+
+        private List<Button> buttons;
+
+        private int buttonIndex;
 
         public MenuController() {
             Instance = this;
 
             this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
+
+            buttons = new List<Button>();
+
+            buttonIndex = 0;
 		}
 
         private void OnGeometryChange(GeometryChangedEvent evt) {
-            turnStateLabel = this.Q<Label>("TurnState");
+            ButtonBar = this.Q("GameButtons");
 
-            switchTurnButton = this.Q<Button>("SwitchTurnButton");
-            switchTurnButton.RegisterCallback<ClickEvent>((evt) =>
+            buttons = new List<Button>();
+
+			buttons.Add(this.Q<Button>("FIGHT"));
+            buttons.Add(this.Q<Button>("MAGIC"));
+            buttons.Add(this.Q<Button>("ACT"));
+            buttons.Add(this.Q<Button>("ITEM"));
+			buttons.Add(this.Q<Button>("DEFEND"));
+
+			for (int i = 0; i < buttons.Count; i++)
 			{
-                BattleManager.Instance.AdvanceTurnState();
-            });
+                Button button = buttons[i];
 
-            buttonBar = this.Q("GameButtons");
-            fightButton = this.Q<Button>("FIGHT");
-            magicButton = this.Q<Button>("MAGIC");
-            actButton = this.Q<Button>("ACT");
-            itemButton = this.Q<Button>("ITEM");
-            defendButton = this.Q<Button>("DEFEND");
+                button.RegisterCallback<NavigationMoveEvent>((evt) =>
+				{
+                    switch(evt.direction)
+					{
+                        case NavigationMoveEvent.Direction.Up:
+                        case NavigationMoveEvent.Direction.Down: break;
+                        case NavigationMoveEvent.Direction.Left: SelectPreviousButton(); break;
+                        case NavigationMoveEvent.Direction.Right: SelectNextButton(); break;
+					}
+
+                    evt.PreventDefault();
+                });
+
+                button.RegisterCallback<NavigationSubmitEvent>((evt) =>
+                {
+                    Debug.Log(button.name);
+                });
+
+                button.RegisterCallback<BlurEvent>((evt) =>
+                {
+                    if (evt.relatedTarget is Button newButton)
+					{
+                        if (buttons.Contains(newButton))
+						{
+                            return;
+						}
+					}
+
+                    //button.Focus() doesn't work because you can't select multiple VisualElements in one frame
+                    //find another way to keep the player from deselecting the game ui
+                });
+			}
         }
 
-        public void SetDebug(bool debug) {
-            if (currentDebug == debug)
-                return;
+        public void SelectCurrentButton() {
+            buttons[buttonIndex].Focus();
+		}
 
-            currentDebug = debug;
+        public void SelectButton(int index) {
+            buttonIndex = index;
 
-            this.Query(className: "debug").ForEach((element) =>
-			{
-                if (debug)
-                {
-                    element.RemoveFromClassList("hidden");
-                }
-                else
-                {
-                    element.AddToClassList("hidden");
-                }
-            });
+            buttons[index].Focus();
+        }
+
+        public void SelectPreviousButton() {
+            buttonIndex--;
+
+            if (buttonIndex < 0)
+                buttonIndex = 4;
+
+            SelectButton(buttonIndex);
+		}
+
+        public void SelectNextButton() {
+            buttonIndex++;
+
+            if (buttonIndex > 4)
+                buttonIndex = 0;
+
+            SelectButton(buttonIndex);
         }
     }
 }
