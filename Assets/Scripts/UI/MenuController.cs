@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
 namespace Combustion.UI
 {
     using Battle;
-	using UnityEngine.EventSystems;
+    using Utility;
 
 	public class MenuController : VisualElement
     {
@@ -17,16 +18,6 @@ namespace Combustion.UI
 
         //Game ui
         public VisualElement ButtonBar { get; private set; }
-
-        private Button fightButton;
-
-        private Button magicButton;
-
-        private Button actButton;
-
-        private Button itemButton;
-
-        private Button defendButton;
 
         private List<Button> buttons;
 
@@ -85,8 +76,7 @@ namespace Combustion.UI
 						}
 					}
 
-                    //button.Focus() doesn't work because you can't select multiple VisualElements in one frame
-                    //find another way to keep the player from deselecting the game ui
+                    Scheduler.Schedule(0, () => { button.Focus(); });
                 });
 			}
         }
