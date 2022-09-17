@@ -9,11 +9,17 @@ namespace Combustion.Battle
 {
 	using UI;
 
+	using Player;
+
     public class BattleManager : MonoBehaviour
     {
 		public static BattleManager Instance { get; private set; }
 
 		public Pattern currentPattern;
+
+		public AudioSource audioSource;
+
+		public AudioClip buttonSelectAudio;
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
@@ -55,6 +61,8 @@ namespace Combustion.Battle
 			ArenaController.Instance.MoveAndScaleArena(ArenaController.Instance.textArenaPosition, ArenaController.Instance.textArenaSize, 1f);
 
 			MenuController.Instance.ButtonBar.SetEnabled(true);
+
+			PlayerController.Instance.gameObject.SetActive(false);
 		}
 
 		protected virtual void StartEnemyTurn() {
@@ -64,6 +72,8 @@ namespace Combustion.Battle
 			SpawnRandomPattern();
 
 			MenuController.Instance.ButtonBar.SetEnabled(false);
+
+			PlayerController.Instance.gameObject.SetActive(true);
 		}
 
 		public void SpawnRandomPattern() {

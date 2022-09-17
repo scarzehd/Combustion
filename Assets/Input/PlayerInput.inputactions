@@ -130,17 +130,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d7604760-0bac-43ea-9156-2723c4ab7a08",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4d6adf36-baaa-4e86-879f-712fce2b1263",
                     "path": "<Mouse>/position",
                     "interactions": "",

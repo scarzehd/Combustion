@@ -21,6 +21,8 @@ namespace Combustion.UI
 
         private List<Button> buttons;
 
+        private List<VisualElement> menuItems;
+
         private int buttonIndex;
 
         public MenuController() {
@@ -29,6 +31,8 @@ namespace Combustion.UI
             this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
 
             buttons = new List<Button>();
+
+            menuItems = new List<VisualElement>();
 
             buttonIndex = 0;
 		}
@@ -76,19 +80,22 @@ namespace Combustion.UI
 						}
 					}
 
-                    Scheduler.Schedule(0, () => { button.Focus(); });
+                    Scheduler.Schedule(0, () => { SelectCurrentButton(); });
                 });
 			}
         }
 
         public void SelectCurrentButton() {
-            buttons[buttonIndex].Focus();
+            SelectButton(buttonIndex);
 		}
 
         public void SelectButton(int index) {
-            buttonIndex = index;
+            if (BattleManager.Instance.turnState == BattleManager.TurnState.Player)
+			{
+                buttonIndex = index;
 
-            buttons[index].Focus();
+                buttons[index].Focus();
+            }
         }
 
         public void SelectPreviousButton() {
@@ -108,5 +115,9 @@ namespace Combustion.UI
 
             SelectButton(buttonIndex);
         }
+
+        private void CreateActMenu() {
+
+		}
     }
 }

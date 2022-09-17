@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 namespace Combustion.Player
 {
+	using Battle;
+
 	public class PlayerController : MonoBehaviour
 	{
 		public static PlayerController Instance { get; private set; }
@@ -19,16 +21,21 @@ namespace Combustion.Player
 		public float HP { get; private set; }
 		public float MaxHP { get; private set; }
 
+		private void OnEnable() {
+			transform.position = Vector2.zero;
+		}
+
 		private void Start() {
 			Instance = this;
 
 			rb = GetComponent<Rigidbody2D>();
 
-			playerInput = GetComponent<PlayerInput>();
+			playerInput = ArenaController.Instance.gameObject.GetComponent<PlayerInput>();
 		}
 
 		private void Update() {
 			GetInput();
+			UpdateActive();
 		}
 
 		private void GetInput() {
@@ -63,6 +70,10 @@ namespace Combustion.Player
 			{
 				y = 0;
 			}
+		}
+
+		private void UpdateActive() {
+
 		}
 
 		private void FixedUpdate() {

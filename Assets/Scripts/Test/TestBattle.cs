@@ -60,10 +60,4 @@ public class TestBattle : BattleManager
 
 		Debug.Log("MoveArena called");
 	}
-
-	public void SpawnTestPattern() {
-		TestPattern2 testPattern = Resources.Load<TestPattern2>("Patterns/Test Pattern 2");
-		testPattern.Spawn();
-		currentPattern = testPattern;
-	}
 }

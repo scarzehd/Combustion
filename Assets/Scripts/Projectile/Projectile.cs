@@ -12,11 +12,11 @@ namespace Combustion.Projectile
 
 		protected float lifetime;
 
-		private void Awake() {
+		protected virtual void Awake() {
 			rb = gameObject.GetComponent<Rigidbody2D>();
 		}
 
-		private void Update() {
+		protected virtual void Update() {
 			lifetime -= Time.deltaTime;
 			if (lifetime <= 0)
 			{
@@ -25,11 +25,7 @@ namespace Combustion.Projectile
 			}
 		}
 
-		public static Projectile Spawn(Pattern pattern, Sprite sprite, float lifetime, Vector2 position = default(Vector2), params object[] list) {
-			return null;
-		}
-
-		protected static GameObject CreateProjectileBase(Sprite sprite, Vector2 position = default(Vector2)) {
+		protected static T CreateProjectile<T>(Sprite sprite, Vector2 position = default(Vector2)) where T : Projectile {
 			GameObject go = new GameObject();
 			go.transform.position = position;
 			go.AddComponent<Rigidbody2D>().gravityScale = 0;
@@ -37,10 +33,9 @@ namespace Combustion.Projectile
 			ren.sprite = sprite;
 			ren.sortingOrder = 1;
 
-			return go;
+			return go.AddComponent<T>();
 		}
 
-		public virtual void Move(params object[] list) { }
 		public virtual void OnHit(Collider2D collider) { }
 	}
 }

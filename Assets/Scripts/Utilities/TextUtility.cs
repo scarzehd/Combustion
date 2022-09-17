@@ -1,4 +1,4 @@
-namespace Combusiton.Utility
+namespace Combustion.Utility
 {
     public static class TextUtility
     {
