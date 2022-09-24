@@ -19,6 +19,8 @@ namespace Combustion.Battle
 
 		public AudioClip buttonSelectAudio;
 
+		public Enemy[] enemies;
+
 		// Start is called before the first frame update
 		protected virtual void Start() {
 			Instance = this;
