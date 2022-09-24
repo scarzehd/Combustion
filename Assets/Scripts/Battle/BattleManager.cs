@@ -15,11 +15,11 @@ namespace Combustion.Battle
     {
 		public static BattleManager Instance { get; private set; }
 
-		public Pattern currentPattern;
-
-		public AudioSource audioSource;
+		public PatternBase currentPattern;
 
 		public AudioClip buttonSelectAudio;
+
+		public Enemy[] enemies;
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
@@ -29,10 +29,7 @@ namespace Combustion.Battle
         // Update is called once per frame
         protected virtual void Update() {
 			if (turnState == TurnState.Enemy && currentPattern != null) {
-				if (currentPattern.IsActive)
-				{
-					currentPattern.Update();
-				}
+				currentPattern.Update();
 			}
 		}
 
@@ -69,17 +66,17 @@ namespace Combustion.Battle
 			if (currentPattern != null)
 				currentPattern.Despawn();
 
+			PlayerController.Instance.gameObject.SetActive(true);
+
 			SpawnRandomPattern();
 
 			MenuController.Instance.ButtonBar.SetEnabled(false);
-
-			PlayerController.Instance.gameObject.SetActive(true);
 		}
 
 		public void SpawnRandomPattern() {
 			if (currentPattern != null)
 				currentPattern.Despawn();
-			Pattern[] patterns = Resources.LoadAll<Pattern>("Patterns");
+			PatternBase[] patterns = Resources.LoadAll<PatternBase>("Patterns");
 			currentPattern = patterns[Random.Range(0, patterns.Length)];
 			currentPattern.Spawn();
 		}

@@ -9,7 +9,7 @@ namespace Combustion.BattleNodes.Elements
 
 	public class PatternNode : ActionNode
 	{
-		public Pattern Pattern { get; set; }
+		public PatternBase Pattern { get; set; }
 
 		public string PatternPath { get; set; }
 
