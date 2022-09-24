@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Combustion.Player
 {
+	using Battle;
+
 	public class PlayerController : MonoBehaviour
 	{
 		public static PlayerController Instance { get; private set; }
@@ -10,24 +13,35 @@ namespace Combustion.Player
 
 		private float x, y;
 
+		private PlayerInput playerInput;
+
 		[SerializeField]
 		private float speed;
 
 		public float HP { get; private set; }
 		public float MaxHP { get; private set; }
 
+		private void OnEnable() {
+			transform.position = Vector2.zero;
+		}
+
 		private void Start() {
 			Instance = this;
 
 			rb = GetComponent<Rigidbody2D>();
+
+			playerInput = ArenaController.Instance.gameObject.GetComponent<PlayerInput>();
 		}
 
 		private void Update() {
 			GetInput();
+			UpdateActive();
 		}
 
 		private void GetInput() {
-			x = Input.GetAxisRaw("Horizontal");
+			Vector2 input = playerInput.actions["Move"].ReadValue<Vector2>();
+
+			x = input.x;
 
 			if (x > 0.5)
 			{
@@ -42,7 +56,7 @@ namespace Combustion.Player
 				x = 0;
 			}
 
-			y = Input.GetAxisRaw("Vertical");
+			y = input.y;
 
 			if (y > 0.5)
 			{
@@ -56,6 +70,10 @@ namespace Combustion.Player
 			{
 				y = 0;
 			}
+		}
+
+		private void UpdateActive() {
+
 		}
 
 		private void FixedUpdate() {
