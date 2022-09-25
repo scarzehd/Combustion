@@ -23,7 +23,12 @@ public class FloweyPattern : PatternBase
 	public float projectileLifetime;
 	private float lifetimeCounter;
 
-	public Sprite projectileSprite;
+	public Sprite[] projectileSprites;
+
+	private int projectileSpriteIndex;
+
+	public float projectileAnimationTime;
+	private float projectileAnimationCounter;
 
 	private Vector2 center;
 
@@ -47,12 +52,14 @@ public class FloweyPattern : PatternBase
 
 			projectiles.Add(proj);
 
-			proj.SetSprite(projectileSprite);
+			proj.SetSprite(projectileSprites[projectileSpriteIndex]);
 
 			proj.gameObject.SetActive(false);
 		}
 
 		lifetimeCounter = projectileLifetime;
+
+		projectileAnimationCounter = projectileAnimationTime;
 
 		SetupArena();
 	}
@@ -71,6 +78,8 @@ public class FloweyPattern : PatternBase
 		currentProjectileIndex = 0;
 
 		projectilesMoving = false;
+
+		projectileSpriteIndex = 0;
 	}
 
 	public override void Update() {
@@ -116,9 +125,23 @@ public class FloweyPattern : PatternBase
 			}
 		}
 
+		projectileAnimationCounter -= Time.deltaTime;
+
+		if (projectileAnimationCounter <= 0)
+		{
+			projectileSpriteIndex++;
+
+			if (projectileSpriteIndex >= projectileSprites.Length)
+				projectileSpriteIndex = 0;
+
+			projectileAnimationCounter = projectileAnimationTime;
+		}
+
 		foreach (ProjectileBase projBase in projectiles)
 		{
 			projBase.Update();
+
+			projBase.SetSprite(projectileSprites[projectileSpriteIndex]);
 		}
 	}
 

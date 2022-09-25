@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPattern: {fileID: 0}
   buttonSelectAudio: {fileID: 8300000, guid: ce5fff055c02de44b9840f87d9778f8e, type: 3}
-  enemies: []
+  currentEnemy: {fileID: 526805371}
   turnState: 0
   minSizeX: 1
   maxSizeX: 5
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 526805368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efd44b328ea9b504780be5777d88a9c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d9a53008364220469fa0a751abcd148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actChoices:
@@ -562,9 +562,9 @@ MonoBehaviour:
       Value:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 449046420}
-            m_TargetAssemblyTypeName: TestBattle, Assembly-CSharp
-            m_MethodName: AdvanceTurnState
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -574,6 +574,88 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  defense: 0
+  hp: 0
   patterns:
   - {fileID: 11400000, guid: e702c531375a28c41987a3b62fa6ad7f, type: 2}
 --- !u!1 &619394800
@@ -772,14 +854,14 @@ MonoBehaviour:
   m_PointAction: {fileID: 2131804744389933782, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_MoveAction: {fileID: -5600800909486892130, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_SubmitAction: {fileID: 5674789203460298605, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
-  m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: -1751827497505936579, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
+  m_CancelAction: {fileID: -9034801928743187040, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
+  m_LeftClickAction: {fileID: -5324449959448092042, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!114 &1110510115

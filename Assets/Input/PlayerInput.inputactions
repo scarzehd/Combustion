@@ -87,15 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftClick",
-                    "type": "Button",
-                    "id": "b0ce10cf-f185-43a1-b003-6b63803a2223",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Mouse",
                     "type": "Value",
                     "id": "19b5a8f5-e47c-4103-b0bf-1743c7b8a821",
@@ -103,6 +94,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "24948882-7dfa-4bb9-89e6-bf678d84bc50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "e4a57237-70a4-461b-89b4-fe324a79e7ec",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -119,7 +128,18 @@
                 },
                 {
                     "name": "",
-                    "id": "91dab1fa-c485-4d22-ba1b-c472d4b7f8a4",
+                    "id": "4d6adf36-baaa-4e86-879f-712fce2b1263",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99c4a686-8854-40e4-a619-c97053a9eb77",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -130,12 +150,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4d6adf36-baaa-4e86-879f-712fce2b1263",
-                    "path": "<Mouse>/position",
+                    "id": "b079d2fc-fcfb-4f9e-9896-aee8df97cdcf",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -24,7 +24,7 @@ Button {
     -unity-font: url('project://database/Assets/Fonts/DTM-Mono.otf?fileID=12800000&guid=89f75275511a01f4c8951f798700f8a1&type=3#DTM-Mono');
     -unity-font-definition: url('project://database/Assets/Fonts/DTM-Mono%20SDF.asset?fileID=11400000&guid=95c8213316670c144850869dd87d2038&type=2#DTM-Mono SDF');
     -unity-font-style: bold;
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     transition-property: translate;
 }
 
@@ -32,13 +32,13 @@ Button {
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    height: 30%;
+    height: 10%;
     transition-property: opacity, translate;
     transition-duration: 0.5s, 0.5s;
     transition-timing-function: ease, ease-in-out;
-    top: 25%;
     max-width: 100%;
     min-width: 700px;
+    translate: 0 -50px;
 }
 
 .gameButtons:disabled {
@@ -46,6 +46,30 @@ Button {
 }
 
 Button:focus {
-    -unity-background-image-tint-color: rgba(253, 255, 0, 255);
-    color: rgba(253, 255, 0, 255);
+    -unity-background-image-tint-color: rgb(253, 255, 0);
+    color: rgb(253, 255, 0);
+}
+
+.textBox {
+    width: 90%;
+    height: 30%;
+    visibility: visible;
+    bottom: 110px;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.actChoice {
+    -unity-font: url('project://database/Assets/Fonts/DTM-Mono.otf?fileID=12800000&guid=89f75275511a01f4c8951f798700f8a1&type=3#DTM-Mono');
+    -unity-font-definition: url('project://database/Assets/Fonts/DTM-Mono%20SDF.asset?fileID=11400000&guid=95c8213316670c144850869dd87d2038&type=2#DTM-Mono SDF');
+    font-size: 30px;
+    height: 32%;
+    flex-direction: row;
+    -unity-text-align: middle-left;
+    width: 33%;
+    margin-left: 25px;
+    color: rgba(255, 255, 255, 255);
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0);
 }

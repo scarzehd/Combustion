@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 namespace Combustion.UI
 {
     using Battle;
-    using Utility;
+	using UnityEngine.Events;
+	using Utility;
 
 	public class MenuController : VisualElement
     {
@@ -19,9 +20,13 @@ namespace Combustion.UI
         //Game ui
         public VisualElement ButtonBar { get; private set; }
 
+        public VisualElement TextBox { get; private set; }
+
         private List<Button> buttons;
 
         private List<VisualElement> menuItems;
+
+        private int menuIndex;
 
         private int buttonIndex;
 
@@ -64,25 +69,63 @@ namespace Combustion.UI
 
                     evt.PreventDefault();
                 });
-
-                button.RegisterCallback<NavigationSubmitEvent>((evt) =>
-                {
-                    Debug.Log(button.name);
-                });
-
-                button.RegisterCallback<BlurEvent>((evt) =>
-                {
-                    if (evt.relatedTarget is Button newButton)
-					{
-                        if (buttons.Contains(newButton))
-						{
-                            return;
-						}
-					}
-
-                    Scheduler.Schedule(0, () => { SelectCurrentButton(); });
-                });
 			}
+
+            buttons[2].RegisterCallback<NavigationSubmitEvent>((evt) =>
+            {
+                CreateActMenu();
+            });
+
+            TextBox = this.Q("TextBox");
+        }
+
+        public void SelectCurrentMenuItem() {
+            SelectMenuItem(menuIndex);
+		}
+
+        public void SelectMenuItem(int index) {
+            if (BattleManager.Instance.turnState == BattleManager.TurnState.Player)
+			{
+                menuIndex = index;
+
+                menuItems[index].Focus();
+			}
+		}
+
+        public void SelectNextMenuItem() {
+            menuIndex++;
+
+            if (menuIndex % 3 == 0)
+                menuIndex -= 3;
+
+            SelectMenuItem(menuIndex);
+		}
+
+        public void SelectPreviousMenuItem() {
+            menuIndex--;
+
+            if (menuIndex % 3 < 0 || menuIndex % 3 == 2)
+                menuIndex += 3;
+
+            SelectMenuItem(menuIndex);
+        }
+
+        public void SelectRightMenuItem() {
+            menuIndex += 3;
+
+            if (menuIndex > menuItems.Count - 1)
+                menuIndex -= menuItems.Count;
+
+            SelectMenuItem(menuIndex);
+        }
+
+        public void SelectLeftMenuItem() {
+            menuIndex -= 3;
+
+            if (menuIndex < 0)
+                menuIndex += menuItems.Count;
+
+            SelectMenuItem(menuIndex);
         }
 
         public void SelectCurrentButton() {
@@ -116,8 +159,45 @@ namespace Combustion.UI
             SelectButton(buttonIndex);
         }
 
-        private void CreateActMenu() {
+        public void RemoveActMenu() {
+            TextBox.Clear();
+		}
 
+        private void CreateActMenu() {
+            SerializableDictionary<string, UnityEvent> actChoices = BattleManager.Instance.currentEnemy.actChoices;
+
+            foreach (var (name, evt) in actChoices)
+			{
+                Button choice = new Button() { text = "* " + name };
+
+                choice.RegisterCallback<ClickEvent>((e) =>
+                {
+                    evt.Invoke();
+                });
+
+                choice.pickingMode = PickingMode.Ignore;
+
+                choice.AddToClassList("actChoice");
+
+                TextBox.Add(choice);
+
+                menuItems.Add(choice);
+
+                choice.RegisterCallback<NavigationMoveEvent>((e) =>
+                {
+                    switch (e.direction)
+					{
+                        case NavigationMoveEvent.Direction.Left: SelectLeftMenuItem(); break;
+                        case NavigationMoveEvent.Direction.Right: SelectRightMenuItem(); break;
+                        case NavigationMoveEvent.Direction.Up: SelectPreviousMenuItem(); break;
+                        case NavigationMoveEvent.Direction.Down: SelectNextMenuItem(); break;
+					}
+
+                    e.PreventDefault();
+                });
+			}
+
+            SelectCurrentMenuItem();
 		}
     }
 }

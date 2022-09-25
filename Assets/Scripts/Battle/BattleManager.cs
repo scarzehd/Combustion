@@ -19,7 +19,7 @@ namespace Combustion.Battle
 
 		public AudioClip buttonSelectAudio;
 
-		public Enemy[] enemies;
+		public Enemy currentEnemy;
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
@@ -68,17 +68,11 @@ namespace Combustion.Battle
 
 			PlayerController.Instance.gameObject.SetActive(true);
 
-			SpawnRandomPattern();
+			currentPattern = currentEnemy.ChoosePattern();
+
+			currentPattern.Spawn();
 
 			MenuController.Instance.ButtonBar.SetEnabled(false);
-		}
-
-		public void SpawnRandomPattern() {
-			if (currentPattern != null)
-				currentPattern.Despawn();
-			PatternBase[] patterns = Resources.LoadAll<PatternBase>("Patterns");
-			currentPattern = patterns[Random.Range(0, patterns.Length)];
-			currentPattern.Spawn();
 		}
 	}
 }
