@@ -10,8 +10,9 @@ namespace Combustion.Battle
 	using UI;
 
 	using Player;
+	using Utility;
 
-    public class BattleManager : MonoBehaviour
+	public class BattleManager : MonoBehaviour
     {
 		public static BattleManager Instance { get; private set; }
 
@@ -23,7 +24,7 @@ namespace Combustion.Battle
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
-			Instance = this;
+			Instance = this;	
 		}
 
         // Update is called once per frame
@@ -31,13 +32,21 @@ namespace Combustion.Battle
 			if (turnState == TurnState.Enemy && currentPattern != null) {
 				currentPattern.Update();
 			}
+
+			if (turnState == TurnState.Start)
+			{
+				turnState = TurnState.Player;
+
+				StartPlayerTurn();
+			}
 		}
 
-		public TurnState turnState = TurnState.Player;
+		public TurnState turnState;
 
 		public enum TurnState {
 			Player,
-			Enemy
+			Enemy,
+			Start
 		}
 
 		public virtual void AdvanceTurnState() {
@@ -54,17 +63,18 @@ namespace Combustion.Battle
 		}
 
 		protected virtual void StartPlayerTurn() {
-			currentPattern.Despawn();
+			currentPattern?.Despawn();
 			ArenaController.Instance.MoveAndScaleArena(ArenaController.Instance.textArenaPosition, ArenaController.Instance.textArenaSize, 1f);
 
-			MenuController.Instance.ButtonBar.SetEnabled(true);
+			MenuManager.Instance.ButtonBar.SetEnabled(true);
+
+			MenuManager.Instance.SelectCurrentButton();
 
 			PlayerController.Instance.gameObject.SetActive(false);
 		}
 
 		protected virtual void StartEnemyTurn() {
-			if (currentPattern != null)
-				currentPattern.Despawn();
+			currentPattern?.Despawn();
 
 			PlayerController.Instance.gameObject.SetActive(true);
 
@@ -72,7 +82,9 @@ namespace Combustion.Battle
 
 			currentPattern.Spawn();
 
-			MenuController.Instance.ButtonBar.SetEnabled(false);
+			MenuManager.Instance.ButtonBar.SetEnabled(false);
+
+			MenuManager.Instance.RemoveActMenu();
 		}
 	}
 }

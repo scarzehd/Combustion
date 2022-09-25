@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace Combustion.UI
 {
     using Battle;
-	using UnityEngine.Events;
 	using Utility;
 
-	public class MenuController : VisualElement
+    public class MenuManager : MonoBehaviour
     {
-        public static MenuController Instance;
+        public static MenuManager Instance { get; private set; }
 
-        public new class UxmlFactory : UxmlFactory<MenuController, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits { }
+        public VisualElement root;
 
         //Game ui
         public VisualElement ButtonBar { get; private set; }
@@ -30,67 +28,71 @@ namespace Combustion.UI
 
         private int buttonIndex;
 
-        public MenuController() {
-            Instance = this;
-
-            this.RegisterCallback<GeometryChangedEvent>(OnGeometryChange);
-
+        private void Start() {
             buttons = new List<Button>();
 
             menuItems = new List<VisualElement>();
 
             buttonIndex = 0;
-		}
 
-        private void OnGeometryChange(GeometryChangedEvent evt) {
-            ButtonBar = this.Q("GameButtons");
+            menuIndex = 0;
+
+            Instance = this;
+
+            root = GetComponent<UIDocument>().rootVisualElement;
+
+            Setup();
+        }
+
+        private void Setup() {
+            ButtonBar = root.Q("GameButtons");
 
             buttons = new List<Button>();
 
-			buttons.Add(this.Q<Button>("FIGHT"));
-            buttons.Add(this.Q<Button>("MAGIC"));
-            buttons.Add(this.Q<Button>("ACT"));
-            buttons.Add(this.Q<Button>("ITEM"));
-			buttons.Add(this.Q<Button>("DEFEND"));
+            buttons.Add(root.Q<Button>("FIGHT"));
+            buttons.Add(root.Q<Button>("MAGIC"));
+            buttons.Add(root.Q<Button>("ACT"));
+            buttons.Add(root.Q<Button>("ITEM"));
+            buttons.Add(root.Q<Button>("DEFEND"));
 
-			for (int i = 0; i < buttons.Count; i++)
-			{
+            for (int i = 0; i < buttons.Count; i++)
+            {
                 Button button = buttons[i];
 
                 button.RegisterCallback<NavigationMoveEvent>((evt) =>
-				{
-                    switch(evt.direction)
-					{
+                {
+                    switch (evt.direction)
+                    {
                         case NavigationMoveEvent.Direction.Up:
                         case NavigationMoveEvent.Direction.Down: break;
                         case NavigationMoveEvent.Direction.Left: SelectPreviousButton(); break;
                         case NavigationMoveEvent.Direction.Right: SelectNextButton(); break;
-					}
+                    }
 
                     evt.PreventDefault();
                 });
-			}
+            }
 
             buttons[2].RegisterCallback<NavigationSubmitEvent>((evt) =>
             {
                 CreateActMenu();
             });
 
-            TextBox = this.Q("TextBox");
+            TextBox = root.Q("TextBox");
         }
 
         public void SelectCurrentMenuItem() {
             SelectMenuItem(menuIndex);
-		}
+        }
 
         public void SelectMenuItem(int index) {
             if (BattleManager.Instance.turnState == BattleManager.TurnState.Player)
-			{
+            {
                 menuIndex = index;
 
                 menuItems[index].Focus();
-			}
-		}
+            }
+        }
 
         public void SelectNextMenuItem() {
             menuIndex++;
@@ -99,7 +101,7 @@ namespace Combustion.UI
                 menuIndex -= 3;
 
             SelectMenuItem(menuIndex);
-		}
+        }
 
         public void SelectPreviousMenuItem() {
             menuIndex--;
@@ -130,11 +132,11 @@ namespace Combustion.UI
 
         public void SelectCurrentButton() {
             SelectButton(buttonIndex);
-		}
+        }
 
         public void SelectButton(int index) {
             if (BattleManager.Instance.turnState == BattleManager.TurnState.Player)
-			{
+            {
                 buttonIndex = index;
 
                 buttons[index].Focus();
@@ -148,7 +150,7 @@ namespace Combustion.UI
                 buttonIndex = 4;
 
             SelectButton(buttonIndex);
-		}
+        }
 
         public void SelectNextButton() {
             buttonIndex++;
@@ -161,18 +163,27 @@ namespace Combustion.UI
 
         public void RemoveActMenu() {
             TextBox.Clear();
-		}
+
+            menuItems = new List<VisualElement>();
+
+            SelectCurrentButton();
+        }
 
         private void CreateActMenu() {
             SerializableDictionary<string, UnityEvent> actChoices = BattleManager.Instance.currentEnemy.actChoices;
 
             foreach (var (name, evt) in actChoices)
-			{
+            {
                 Button choice = new Button() { text = "* " + name };
 
-                choice.RegisterCallback<ClickEvent>((e) =>
+                choice.RegisterCallback<NavigationSubmitEvent>((e) =>
                 {
                     evt.Invoke();
+                });
+
+                choice.RegisterCallback<NavigationCancelEvent>((e) =>
+                {
+                    RemoveActMenu();
                 });
 
                 choice.pickingMode = PickingMode.Ignore;
@@ -186,18 +197,20 @@ namespace Combustion.UI
                 choice.RegisterCallback<NavigationMoveEvent>((e) =>
                 {
                     switch (e.direction)
-					{
+                    {
                         case NavigationMoveEvent.Direction.Left: SelectLeftMenuItem(); break;
                         case NavigationMoveEvent.Direction.Right: SelectRightMenuItem(); break;
                         case NavigationMoveEvent.Direction.Up: SelectPreviousMenuItem(); break;
                         case NavigationMoveEvent.Direction.Down: SelectNextMenuItem(); break;
-					}
+                    }
 
                     e.PreventDefault();
                 });
-			}
+            }
+
+            menuIndex = 0;
 
             SelectCurrentMenuItem();
-		}
+        }
     }
 }
