@@ -61,6 +61,8 @@ public class FloweyPattern : PatternBase
 
 		projectileAnimationCounter = projectileAnimationTime;
 
+		delayCounter = projectileDelay;
+
 		SetupArena();
 	}
 

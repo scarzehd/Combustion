@@ -191,7 +191,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 16, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -205,7 +205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449046414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -228,7 +228,7 @@ MonoBehaviour:
   scaleSnapping: 0.05
   edgeCorrection: 0.1
   textArenaSize: {x: 16, y: 3}
-  textArenaPosition: {x: 0, y: -1.5}
+  textArenaPosition: {x: 0, y: -0.5}
 --- !u!68 &449046418
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -275,6 +275,8 @@ MonoBehaviour:
   maxPosX: 3
   minPosY: -3
   maxPosY: 3
+  boxText: '* Flowey smiles menacingly.'
+  typeDelay: 0.1
 --- !u!114 &449046421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,6 +632,54 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   defense: 0
   hp: 0
   patterns:
@@ -806,6 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819acd66ccd56a94499b7673d2b6f087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuState: 0
 --- !u!1 &1110510113
 GameObject:
   m_ObjectHideFlags: 0

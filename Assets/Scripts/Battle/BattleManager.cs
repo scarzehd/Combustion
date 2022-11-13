@@ -18,13 +18,11 @@ namespace Combustion.Battle
 
 		public PatternBase currentPattern;
 
-		public AudioClip buttonSelectAudio;
-
 		public Enemy currentEnemy;
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
-			Instance = this;	
+			Instance = this;
 		}
 
         // Update is called once per frame
@@ -84,7 +82,7 @@ namespace Combustion.Battle
 
 			MenuManager.Instance.ButtonBar.SetEnabled(false);
 
-			MenuManager.Instance.RemoveActMenu();
+			MenuManager.Instance.ClearTextBox();
 		}
 	}
 }

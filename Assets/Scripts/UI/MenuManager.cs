@@ -7,7 +7,8 @@ using UnityEngine.Events;
 namespace Combustion.UI
 {
     using Battle;
-	using Utility;
+    using System;
+    using Utility;
 
     public class MenuManager : MonoBehaviour
     {
@@ -28,6 +29,21 @@ namespace Combustion.UI
 
         private int buttonIndex;
 
+        private Label dialogLabel;
+        private string previousBoxText;
+        private float previousTypeDelay;
+
+        public Action<int> onButtonSelect;
+        public Action<int> onMenuItemSelect;
+
+        public enum MenuState {
+            Act,
+            Dialog,
+            None
+		}
+
+        public MenuState menuState = MenuState.None;
+
         private void Start() {
             buttons = new List<Button>();
 
@@ -41,10 +57,6 @@ namespace Combustion.UI
 
             root = GetComponent<UIDocument>().rootVisualElement;
 
-            Setup();
-        }
-
-        private void Setup() {
             ButtonBar = root.Q("GameButtons");
 
             buttons = new List<Button>();
@@ -70,6 +82,11 @@ namespace Combustion.UI
                     }
 
                     evt.PreventDefault();
+
+                    //TODO: find a way to let the child of the BattleManager class store this value
+                    //SoundManager.Instance.PlaySound(BattleManager.Instance.buttonSelectAudio);
+
+                    onButtonSelect(i);
                 });
             }
 
@@ -161,15 +178,30 @@ namespace Combustion.UI
             SelectButton(buttonIndex);
         }
 
-        public void RemoveActMenu() {
-            TextBox.Clear();
+        public void ClearTextBox() {
+            switch (menuState)
+			{
+                case MenuState.Act:
+                    TextBox.Clear();
+                    menuItems = new List<VisualElement>();
+                    SelectCurrentButton();
+                    break;
+                case MenuState.Dialog:
+                    StopCoroutine("_ShowBoxText");
+                    TextBox.Clear();
+                    dialogLabel = null;
+                    break;
+			}
 
-            menuItems = new List<VisualElement>();
+            menuState = MenuState.None;
+		}
 
-            SelectCurrentButton();
-        }
 
         private void CreateActMenu() {
+            ClearTextBox();
+
+            menuState = MenuState.Act;
+
             SerializableDictionary<string, UnityEvent> actChoices = BattleManager.Instance.currentEnemy.actChoices;
 
             foreach (var (name, evt) in actChoices)
@@ -183,7 +215,7 @@ namespace Combustion.UI
 
                 choice.RegisterCallback<NavigationCancelEvent>((e) =>
                 {
-                    RemoveActMenu();
+                    ShowBoxText(previousBoxText, previousTypeDelay);
                 });
 
                 choice.pickingMode = PickingMode.Ignore;
@@ -205,12 +237,51 @@ namespace Combustion.UI
                     }
 
                     e.PreventDefault();
+
+                    onMenuItemSelect(menuItems.IndexOf(choice));
                 });
             }
 
             menuIndex = 0;
 
             SelectCurrentMenuItem();
+        }
+
+        public void ShowBoxText(string text, float typeDelay) {
+            ClearTextBox();
+
+            menuState = MenuState.Dialog;
+
+            previousBoxText = text;
+            previousTypeDelay = typeDelay;
+
+            StartCoroutine(_ShowBoxText(text, typeDelay));
+        }
+
+        private IEnumerator _ShowBoxText(string text, float typeDelay) {
+            if (dialogLabel == null)
+			{
+                dialogLabel = new Label();
+
+                dialogLabel.AddToClassList("dialogLabel");
+
+                TextBox.Add(dialogLabel);
+			}
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (dialogLabel == null)
+				{
+                    break;
+				}
+
+                if (!ArenaController.Instance.IsMoving)
+				{
+                    dialogLabel.text += text[i];
+                }
+
+                yield return new WaitForSeconds(typeDelay);
+            }
         }
     }
 }
