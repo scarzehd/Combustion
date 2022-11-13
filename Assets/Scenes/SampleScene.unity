@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 449046415}
   - component: {fileID: 449046417}
   - component: {fileID: 449046418}
-  - component: {fileID: 449046419}
   - component: {fileID: 449046420}
   - component: {fileID: 449046421}
   - component: {fileID: 449046422}
@@ -192,7 +191,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 16, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -206,7 +205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449046414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -229,7 +228,7 @@ MonoBehaviour:
   scaleSnapping: 0.05
   edgeCorrection: 0.1
   textArenaSize: {x: 16, y: 3}
-  textArenaPosition: {x: 0, y: -1.5}
+  textArenaPosition: {x: 0, y: -0.5}
 --- !u!68 &449046418
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -252,27 +251,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!50 &449046419
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449046414}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!114 &449046420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,8 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPattern: {fileID: 0}
   buttonSelectAudio: {fileID: 8300000, guid: ce5fff055c02de44b9840f87d9778f8e, type: 3}
-  enemies: []
-  turnState: 0
+  currentEnemy: {fileID: 526805371}
+  turnState: 2
   minSizeX: 1
   maxSizeX: 5
   minSizeY: 1
@@ -297,8 +275,8 @@ MonoBehaviour:
   maxPosX: 3
   minPosY: -3
   maxPosY: 3
-  debugUI: {fileID: 1773976226}
-  debugMode: 1
+  boxText: '* Flowey smiles menacingly.'
+  typeDelay: 0.1
 --- !u!114 &449046421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +520,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &526805371
 MonoBehaviour:
@@ -553,7 +531,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 526805368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efd44b328ea9b504780be5777d88a9c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d9a53008364220469fa0a751abcd148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actChoices:
@@ -562,9 +540,9 @@ MonoBehaviour:
       Value:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 449046420}
-            m_TargetAssemblyTypeName: TestBattle, Assembly-CSharp
-            m_MethodName: AdvanceTurnState
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -574,6 +552,136 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - Key: Beg
+      Value:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 526805371}
+            m_TargetAssemblyTypeName: FloweyEnemy, Assembly-CSharp
+            m_MethodName: ActBeg
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  defense: 0
+  hp: 0
   patterns:
   - {fileID: 11400000, guid: e702c531375a28c41987a3b62fa6ad7f, type: 2}
 --- !u!1 &619394800
@@ -697,6 +805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 676663015}
   - component: {fileID: 676663014}
+  - component: {fileID: 676663016}
   m_Layer: 5
   m_Name: BattleUI
   m_TagString: Untagged
@@ -733,8 +842,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &676663016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676663013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819acd66ccd56a94499b7673d2b6f087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuState: 0
 --- !u!1 &1110510113
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,14 +894,14 @@ MonoBehaviour:
   m_PointAction: {fileID: 2131804744389933782, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_MoveAction: {fileID: -5600800909486892130, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_SubmitAction: {fileID: 5674789203460298605, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
-  m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: -1751827497505936579, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
+  m_CancelAction: {fileID: -9034801928743187040, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
+  m_LeftClickAction: {fileID: -5324449959448092042, guid: 80464ba327717c54e89bdc0dd5448913, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!114 &1110510115
@@ -959,54 +1081,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!1 &1773976226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1773976228}
-  - component: {fileID: 1773976227}
-  m_Layer: 5
-  m_Name: DebugUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1773976227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773976226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 570629fdd589f4348a2bd7da317453e2, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: c6eb525049d3b474ca2b308516b86a88, type: 3}
-  m_SortingOrder: 0
---- !u!4 &1773976228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773976226}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1802764326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,7 +1280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1802764329
 MonoBehaviour:
