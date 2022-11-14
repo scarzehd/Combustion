@@ -13,8 +13,8 @@ namespace Combustion.Battle
 
         public float hp;
 
-        public PatternBase[] patterns;
+        public Pattern[] patterns;
 
-        public abstract PatternBase ChoosePattern();
+        public abstract Pattern ChoosePattern();
     }
 }

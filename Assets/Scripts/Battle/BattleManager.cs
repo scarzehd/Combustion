@@ -16,7 +16,7 @@ namespace Combustion.Battle
     {
 		public static BattleManager Instance { get; private set; }
 
-		public PatternBase currentPattern;
+		public Pattern currentPattern;
 
 		public Enemy currentEnemy;
 

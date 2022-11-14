@@ -7,7 +7,7 @@ using Combustion.Projectile;
 
 public class FloweyEnemy : Enemy
 {
-	public override PatternBase ChoosePattern() {
+	public override Pattern ChoosePattern() {
 		return patterns[0];
 	}
 

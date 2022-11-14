@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455007e4eb1d41d4eada0c74ca9b3dae, type: 3}
   m_Name: Flowey Pattern
   m_EditorClassIdentifier: 
+  projectiles: []
   numProjectiles: 20
   projectileDelay: 0.1
   projectileSpeed: 5
