@@ -275,10 +275,12 @@ namespace Combustion.UI
                     break;
 				}
 
-                if (!ArenaController.Instance.IsMoving)
-				{
-                    dialogLabel.text += text[i];
+                while (ArenaController.Instance.IsMoving)
+                {
+                    yield return null;
                 }
+
+                dialogLabel.text += text[i];
 
                 yield return new WaitForSeconds(typeDelay);
             }
