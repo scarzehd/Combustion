@@ -7,7 +7,7 @@ using Combustion.Player;
 using Combustion.Battle;
 
 [CreateAssetMenu(menuName = "Combustion/Test/Flowey Pattern", fileName = "Flowey Pattern")]
-public class FloweyPattern : PatternBase
+public class FloweyPattern : Pattern
 {
 	public int numProjectiles;
 
@@ -48,11 +48,9 @@ public class FloweyPattern : PatternBase
 				center.y + radius * Mathf.Sin(i * 2 * Mathf.PI / numProjectiles)
 			);
 
-			DirectProjectile proj = new DirectProjectile(pos, Vector2.zero);
+			Projectile proj = CreateProjectile(pos, projectileSprites[projectileSpriteIndex]);
 
 			projectiles.Add(proj);
-
-			proj.SetSprite(projectileSprites[projectileSpriteIndex]);
 
 			proj.gameObject.SetActive(false);
 		}
@@ -69,13 +67,13 @@ public class FloweyPattern : PatternBase
 	public override void Despawn() {
 		if (projectiles != null)
 		{
-			foreach (ProjectileBase projBase in projectiles)
+			foreach (Projectile proj in projectiles)
 			{
-				projBase.Destroy();
+				Destroy(proj.gameObject);
 			}
 		}
 
-		projectiles = new List<ProjectileBase>();
+		projectiles = new List<Projectile>();
 
 		currentProjectileIndex = 0;
 
@@ -102,7 +100,7 @@ public class FloweyPattern : PatternBase
 			{
 				if (delayCounter <= 0)
 				{
-					((DirectProjectile)projectiles[currentProjectileIndex]).gameObject.SetActive(true);
+					projectiles[currentProjectileIndex].gameObject.SetActive(true);
 
 					delayCounter = projectileDelay;
 
@@ -115,9 +113,9 @@ public class FloweyPattern : PatternBase
 			{
 				if (!projectilesMoving)
 				{
-					foreach (DirectProjectile proj in projectiles)
+					foreach (Projectile proj in projectiles)
 					{
-						Vector2 velocity = -(proj.gameObject.transform.position).normalized * projectileSpeed;
+						Vector2 velocity = -(proj.transform.position).normalized * projectileSpeed;
 
 						proj.SetVelocity(velocity);
 					}
@@ -139,11 +137,12 @@ public class FloweyPattern : PatternBase
 			projectileAnimationCounter = projectileAnimationTime;
 		}
 
-		foreach (ProjectileBase projBase in projectiles)
+		foreach (Projectile proj in projectiles)
 		{
-			projBase.Update();
-
-			projBase.SetSprite(projectileSprites[projectileSpriteIndex]);
+			if (proj.gameObject.activeSelf)
+			{
+				proj.SpriteRenderer.sprite = projectileSprites[projectileSpriteIndex];
+			}
 		}
 	}
 
