@@ -35,7 +35,6 @@ namespace Combustion.Player
 
 		private void Update() {
 			GetInput();
-			UpdateActive();
 		}
 
 		private void GetInput() {
@@ -70,10 +69,6 @@ namespace Combustion.Player
 			{
 				y = 0;
 			}
-		}
-
-		private void UpdateActive() {
-
 		}
 
 		private void FixedUpdate() {

@@ -17,5 +17,8 @@ MonoBehaviour:
   projectileSpeed: 5
   radius: 2
   projectileLifetime: 5
-  projectileSprite: {fileID: -23576136, guid: c19a06df7cc0e044ba033f0a7a6a95c1, type: 3}
+  projectileSprites:
+  - {fileID: -23576136, guid: c19a06df7cc0e044ba033f0a7a6a95c1, type: 3}
+  - {fileID: -1729119647, guid: c19a06df7cc0e044ba033f0a7a6a95c1, type: 3}
+  projectileAnimationTime: 0.15
   projectileSpawnClip: {fileID: 8300000, guid: 12d1af38b111d704bab45910f154e56c, type: 3}

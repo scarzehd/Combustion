@@ -10,16 +10,15 @@ namespace Combustion.Battle
 	using UI;
 
 	using Player;
+	using Utility;
 
-    public class BattleManager : MonoBehaviour
+	public class BattleManager : MonoBehaviour
     {
 		public static BattleManager Instance { get; private set; }
 
 		public PatternBase currentPattern;
 
-		public AudioClip buttonSelectAudio;
-
-		public Enemy[] enemies;
+		public Enemy currentEnemy;
 
 		// Start is called before the first frame update
 		protected virtual void Start() {
@@ -31,13 +30,21 @@ namespace Combustion.Battle
 			if (turnState == TurnState.Enemy && currentPattern != null) {
 				currentPattern.Update();
 			}
+
+			if (turnState == TurnState.Start)
+			{
+				turnState = TurnState.Player;
+
+				StartPlayerTurn();
+			}
 		}
 
-		public TurnState turnState = TurnState.Player;
+		public TurnState turnState;
 
 		public enum TurnState {
 			Player,
-			Enemy
+			Enemy,
+			Start
 		}
 
 		public virtual void AdvanceTurnState() {
@@ -54,31 +61,28 @@ namespace Combustion.Battle
 		}
 
 		protected virtual void StartPlayerTurn() {
-			currentPattern.Despawn();
+			currentPattern?.Despawn();
 			ArenaController.Instance.MoveAndScaleArena(ArenaController.Instance.textArenaPosition, ArenaController.Instance.textArenaSize, 1f);
 
-			MenuController.Instance.ButtonBar.SetEnabled(true);
+			MenuManager.Instance.ButtonBar.SetEnabled(true);
+
+			MenuManager.Instance.SelectCurrentButton();
 
 			PlayerController.Instance.gameObject.SetActive(false);
 		}
 
 		protected virtual void StartEnemyTurn() {
-			if (currentPattern != null)
-				currentPattern.Despawn();
+			currentPattern?.Despawn();
 
 			PlayerController.Instance.gameObject.SetActive(true);
 
-			SpawnRandomPattern();
+			currentPattern = currentEnemy.ChoosePattern();
 
-			MenuController.Instance.ButtonBar.SetEnabled(false);
-		}
-
-		public void SpawnRandomPattern() {
-			if (currentPattern != null)
-				currentPattern.Despawn();
-			PatternBase[] patterns = Resources.LoadAll<PatternBase>("Patterns");
-			currentPattern = patterns[Random.Range(0, patterns.Length)];
 			currentPattern.Spawn();
+
+			MenuManager.Instance.ButtonBar.SetEnabled(false);
+
+			MenuManager.Instance.ClearTextBox();
 		}
 	}
 }

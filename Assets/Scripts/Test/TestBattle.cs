@@ -4,60 +4,46 @@ using UnityEngine;
 
 using Combustion.Battle;
 using Combustion.UI;
-using TMPro;
-using UnityEngine.UIElements;
+using System;
+using UnityEngine.Events;
 
 public class TestBattle : BattleManager
 {
 	[SerializeField]
 	private float minSizeX, maxSizeX, minSizeY, maxSizeY, minPosX, maxPosX, minPosY, maxPosY;
 
-	[SerializeField]
-	private GameObject debugUI;
+	[SerializeField] private string boxText;
 
-	private Label turnStateText;
+	[SerializeField] private float typeDelay;
 
-	private Button switchTurnStateButton;
-
-	public bool debugMode;
+	[SerializeField] private AudioClip buttonSelectAudio;
 
 	protected override void Start() {
 		base.Start();
 
-		VisualElement debugRoot = debugUI.GetComponent<UIDocument>().rootVisualElement;
+		//MenuManager.Instance hasn't been assigned yet at this point. Possible Solutions:
+		//1. Change the Script Execution Order to make BattleManager scripts execute later
+		//2. Create a Setup method that executes after the Start method of all other scripts
 
-		turnStateText = debugRoot.Q<Label>("TurnState");
-		switchTurnStateButton = debugRoot.Q<Button>("SwitchTurnState");
-		switchTurnStateButton.RegisterCallback<ClickEvent>((evt) => { AdvanceTurnState(); });
+		//1 is a more temporary solution, so I'll probably go with 2
+		MenuManager.Instance.onButtonSelect += PlayButtonSelectAudio;
+		MenuManager.Instance.onMenuItemSelect += PlayButtonSelectAudio;
 	}
 
-	protected override void Update() {
-		base.Update();
+	public void PlayButtonSelectAudio(int index) {
+		SoundManager.Instance.PlaySound(buttonSelectAudio);
+	}
 
-		if (debugMode && !debugUI.activeSelf)
-		{
-			debugUI.SetActive(true);
-		} else if (!debugMode && debugUI.activeSelf)
-		{
-			debugUI.SetActive(false);
-		}
+
+	public void MoveArena() {
+		ArenaController.Instance.MoveAndScaleArena(UnityEngine.Random.Range(minPosX, maxPosX), UnityEngine.Random.Range(minPosY, maxPosY), UnityEngine.Random.Range(minSizeX, maxSizeX), UnityEngine.Random.Range(minSizeY, maxSizeY), 1f);
+
+		Debug.Log("MoveArena called");
 	}
 
 	protected override void StartPlayerTurn() {
 		base.StartPlayerTurn();
 
-		MenuController.Instance.SelectCurrentButton();
-	}
-
-	public override void AdvanceTurnState() {
-		base.AdvanceTurnState();
-
-		turnStateText.text = turnState == TurnState.Player ? "Player Turn" : "Enemy Turn";
-	}
-
-	public void MoveArena() {
-		ArenaController.Instance.MoveAndScaleArena(Random.Range(minPosX, maxPosX), Random.Range(minPosY, maxPosY), Random.Range(minSizeX, maxSizeX), Random.Range(minSizeY, maxSizeY), 1f);
-
-		Debug.Log("MoveArena called");
+		MenuManager.Instance.ShowBoxText(boxText, typeDelay);
 	}
 }
