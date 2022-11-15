@@ -83,9 +83,6 @@ namespace Combustion.UI
 
                     evt.PreventDefault();
 
-                    //TODO: find a way to let the child of the BattleManager class store this value
-                    //SoundManager.Instance.PlaySound(BattleManager.Instance.buttonSelectAudio);
-
                     onButtonSelect(i);
                 });
             }
@@ -93,6 +90,11 @@ namespace Combustion.UI
             buttons[2].RegisterCallback<NavigationSubmitEvent>((evt) =>
             {
                 CreateActMenu();
+            });
+
+            buttons[4].RegisterCallback<NavigationSubmitEvent>((evt) =>
+            {
+                Defend();
             });
 
             TextBox = root.Q("TextBox");
@@ -284,6 +286,12 @@ namespace Combustion.UI
 
                 yield return new WaitForSeconds(typeDelay);
             }
+        }
+
+        private void Defend() {
+            //TODO: implement damage reduction logic when HP system is in place
+
+            BattleManager.Instance.AdvanceTurnState();
         }
     }
 }
