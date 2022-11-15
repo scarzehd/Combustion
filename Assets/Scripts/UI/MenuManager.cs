@@ -87,6 +87,11 @@ namespace Combustion.UI
                 });
             }
 
+            buttons[0].RegisterCallback<NavigationSubmitEvent>((evt) =>
+            {
+                Fight();
+            });
+
             buttons[2].RegisterCallback<NavigationSubmitEvent>((evt) =>
             {
                 CreateActMenu();
@@ -290,6 +295,12 @@ namespace Combustion.UI
 
         private void Defend() {
             //TODO: implement damage reduction logic when HP system is in place
+
+            BattleManager.Instance.AdvanceTurnState();
+        }
+
+        private void Fight() {
+            //TODO: implement attack logic when HP system is in place
 
             BattleManager.Instance.AdvanceTurnState();
         }
