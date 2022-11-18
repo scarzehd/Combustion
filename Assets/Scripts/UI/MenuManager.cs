@@ -7,6 +7,7 @@ using UnityEngine.Events;
 namespace Combustion.UI
 {
     using Battle;
+    using Combustion.Dialog;
     using System;
     using Utility;
 
@@ -30,8 +31,9 @@ namespace Combustion.UI
         private int buttonIndex;
 
         private Label dialogLabel;
-        private string previousBoxText;
-        private float previousTypeDelay;
+        private DialogController currentDialog;
+        //private string previousBoxText;
+        //private float previousTypeDelay;
 
         public Action<int> onButtonSelect;
         public Action<int> onMenuItemSelect;
@@ -59,15 +61,16 @@ namespace Combustion.UI
 
             ButtonBar = root.Q("GameButtons");
 
-            buttons = new List<Button>();
+			buttons = new List<Button>
+			{
+				root.Q<Button>("FIGHT"),
+				root.Q<Button>("MAGIC"),
+				root.Q<Button>("ACT"),
+				root.Q<Button>("ITEM"),
+				root.Q<Button>("DEFEND")
+			};
 
-            buttons.Add(root.Q<Button>("FIGHT"));
-            buttons.Add(root.Q<Button>("MAGIC"));
-            buttons.Add(root.Q<Button>("ACT"));
-            buttons.Add(root.Q<Button>("ITEM"));
-            buttons.Add(root.Q<Button>("DEFEND"));
-
-            for (int i = 0; i < buttons.Count; i++)
+			for (int i = 0; i < buttons.Count; i++)
             {
                 Button button = buttons[i];
 
@@ -186,16 +189,16 @@ namespace Combustion.UI
         }
 
         public void ClearTextBox() {
-            switch (menuState)
+			TextBox.Clear();
+
+			switch (menuState)
 			{
                 case MenuState.Act:
-                    TextBox.Clear();
                     menuItems = new List<VisualElement>();
                     SelectCurrentButton();
                     break;
                 case MenuState.Dialog:
-                    StopCoroutine("_ShowBoxText");
-                    TextBox.Clear();
+                    StopCoroutine("_ShowDialog");
                     dialogLabel = null;
                     break;
 			}
@@ -222,7 +225,8 @@ namespace Combustion.UI
 
                 choice.RegisterCallback<NavigationCancelEvent>((e) =>
                 {
-                    ShowBoxText(previousBoxText, previousTypeDelay);
+                    currentDialog.Reset(true);
+                    ShowDialog(currentDialog.GetLines());
                 });
 
                 choice.pickingMode = PickingMode.Ignore;
@@ -254,46 +258,51 @@ namespace Combustion.UI
             SelectCurrentMenuItem();
         }
 
-        public void ShowBoxText(string text, float typeDelay) {
+        public void ShowDialog(List<DialogLine> lines) {
             ClearTextBox();
 
             menuState = MenuState.Dialog;
 
-            previousBoxText = text;
-            previousTypeDelay = typeDelay;
+			DialogController dialog = new DialogController();
+			dialog.AddLines(lines);
 
-            StartCoroutine(_ShowBoxText(text, typeDelay));
-        }
+            currentDialog = dialog;
 
-        private IEnumerator _ShowBoxText(string text, float typeDelay) {
+            StartCoroutine(_ShowDialog());
+		}
+
+        private IEnumerator _ShowDialog() {
             if (dialogLabel == null)
-			{
+            {
                 dialogLabel = new Label();
 
                 dialogLabel.AddToClassList("dialogLabel");
 
                 TextBox.Add(dialogLabel);
+            }
+            
+            while (ArenaController.Instance.IsMoving)
+            {
+                //This isn't working.
+                //Text is still added to the text box while it's moving
+                Debug.Log("moving");
+                yield return null;
+            }
+
+			Coroutine dialog = StartCoroutine(currentDialog.Parse());
+
+
+			while (!currentDialog.isDone)
+            {
+				dialogLabel.text = currentDialog.currentText;
+
+                yield return null;
 			}
 
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (dialogLabel == null)
-				{
-                    break;
-				}
-
-                while (ArenaController.Instance.IsMoving)
-                {
-                    yield return null;
-                }
-
-                dialogLabel.text += text[i];
-
-                yield return new WaitForSeconds(typeDelay);
-            }
+            yield return dialog;
         }
 
-        private void Defend() {
+		private void Defend() {
             //TODO: implement damage reduction logic when HP system is in place
 
             BattleManager.Instance.AdvanceTurnState();

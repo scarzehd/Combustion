@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Combustion.Battle;
 using Combustion.Projectile;
+using Combustion.Dialog;
 
 public class FloweyEnemy : Enemy
 {

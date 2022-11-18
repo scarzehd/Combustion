@@ -6,6 +6,7 @@ using Combustion.Battle;
 using Combustion.UI;
 using System;
 using UnityEngine.Events;
+using Combustion.Dialog;
 
 public class TestBattle : BattleManager
 {
@@ -17,6 +18,8 @@ public class TestBattle : BattleManager
 	[SerializeField] private float typeDelay;
 
 	[SerializeField] private AudioClip buttonSelectAudio;
+
+	public List<DialogLine> lines;
 
 	protected override void Start() {
 		base.Start();
@@ -44,6 +47,6 @@ public class TestBattle : BattleManager
 	protected override void StartPlayerTurn() {
 		base.StartPlayerTurn();
 
-		MenuManager.Instance.ShowBoxText(boxText, typeDelay);
+		MenuManager.Instance.ShowDialog(lines);
 	}
 }

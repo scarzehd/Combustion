@@ -264,7 +264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPattern: {fileID: 0}
-  buttonSelectAudio: {fileID: 8300000, guid: ce5fff055c02de44b9840f87d9778f8e, type: 3}
   currentEnemy: {fileID: 526805371}
   turnState: 2
   minSizeX: 1
@@ -277,6 +276,11 @@ MonoBehaviour:
   maxPosY: 3
   boxText: '* Flowey smiles menacingly.'
   typeDelay: 0.1
+  buttonSelectAudio: {fileID: 8300000, guid: ce5fff055c02de44b9840f87d9778f8e, type: 3}
+  lines:
+  - {fileID: 11400000, guid: 987e6283677ee25439994ed48bcc5946, type: 2}
+  - {fileID: 11400000, guid: b41b98d5a4a1d8c478ef4df37953ff5e, type: 2}
+  - {fileID: 11400000, guid: 36687beaa971f994b918019f1c93b16d, type: 2}
 --- !u!114 &449046421
 MonoBehaviour:
   m_ObjectHideFlags: 0
