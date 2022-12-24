@@ -5,35 +5,20 @@ using UnityEngine;
 namespace Combustion.Dialog
 {
     using Combustion.UI;
-    using Utility;
 
-    public class DialogController
+    [CreateAssetMenu(fileName = "New Dialog Container", menuName = "Combustion/Dialog/Dialog Container")]
+    public class DialogContainer : ScriptableObject
     {
-        private List<DialogLine> lines;
+        public List<DialogLine> lines;
 
         public string currentText;
 
-        public bool isDone;
+        public bool IsDone { get; private set; }
 
-        public DialogController() {
+        public DialogContainer() {
             lines = new List<DialogLine>();
-            isDone = false;
+            IsDone = false;
             currentText = "";
-        }
-
-        public void AddLine(DialogLine line) {
-            lines.Add(line);
-        }
-
-        public void AddLines(List<DialogLine> lines) {
-            foreach (DialogLine line in lines)
-            {
-                this.lines.Add(line);
-            }
-        }
-
-        public List<DialogLine> GetLines() {
-            return lines;
         }
 
         public IEnumerator Parse() {
@@ -42,12 +27,12 @@ namespace Combustion.Dialog
                 yield return MenuManager.Instance.StartCoroutine(line.Parse(this));
             }
 
-            isDone = true;
+            IsDone = true;
         }
 
         public void Reset(bool keepLines = false) {
             currentText = "";
-            isDone = false;
+            IsDone = false;
             if (!keepLines)
             {
                 lines = new List<DialogLine>();

@@ -31,7 +31,7 @@ namespace Combustion.UI
         private int buttonIndex;
 
         private Label dialogLabel;
-        private DialogController currentDialog;
+        private DialogContainer currentDialog;
         //private string previousBoxText;
         //private float previousTypeDelay;
 
@@ -226,7 +226,7 @@ namespace Combustion.UI
                 choice.RegisterCallback<NavigationCancelEvent>((e) =>
                 {
                     currentDialog.Reset(true);
-                    ShowDialog(currentDialog.GetLines());
+                    ShowDialog(currentDialog);
                 });
 
                 choice.pickingMode = PickingMode.Ignore;
@@ -258,13 +258,10 @@ namespace Combustion.UI
             SelectCurrentMenuItem();
         }
 
-        public void ShowDialog(List<DialogLine> lines) {
+        public void ShowDialog(DialogContainer dialog) {
             ClearTextBox();
 
             menuState = MenuState.Dialog;
-
-			DialogController dialog = new DialogController();
-			dialog.AddLines(lines);
 
             currentDialog = dialog;
 
@@ -285,15 +282,19 @@ namespace Combustion.UI
             {
                 //This isn't working.
                 //Text is still added to the text box while it's moving
-                Debug.Log("moving");
                 yield return null;
             }
 
 			Coroutine dialog = StartCoroutine(currentDialog.Parse());
 
 
-			while (!currentDialog.isDone)
+			while (!currentDialog.IsDone)
             {
+                if (dialogLabel == null)
+                {
+                    break;
+                }
+
 				dialogLabel.text = currentDialog.currentText;
 
                 yield return null;

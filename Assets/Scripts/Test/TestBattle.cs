@@ -19,7 +19,7 @@ public class TestBattle : BattleManager
 
 	[SerializeField] private AudioClip buttonSelectAudio;
 
-	public List<DialogLine> lines;
+	public DialogContainer dialog;
 
 	protected override void Start() {
 		base.Start();
@@ -47,6 +47,6 @@ public class TestBattle : BattleManager
 	protected override void StartPlayerTurn() {
 		base.StartPlayerTurn();
 
-		MenuManager.Instance.ShowDialog(lines);
+		MenuManager.Instance.ShowDialog(dialog);
 	}
 }

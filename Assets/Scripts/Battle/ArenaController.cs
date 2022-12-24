@@ -49,7 +49,6 @@ namespace Combustion.Battle
 		}
 
 		private void Update() {
-			IsMoving = false;
 			HandlePositions();
 			HandleSize();
 			HandleCollider();
@@ -96,6 +95,11 @@ namespace Combustion.Battle
 			{
 				y = Mathf.SmoothStep(originalY, desiredY, t);
 				IsMoving = true;
+			}
+
+			if (x == desiredX && y == desiredY)
+			{
+				IsMoving = false;
 			}
 
 			transform.position = new Vector3(x, y, 0);
