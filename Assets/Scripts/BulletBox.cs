@@ -19,7 +19,7 @@ namespace Combustion
         [SerializeField]
         private float snapThreshold;
 
-        public Rect bounds
+        public Rect Bounds
         {
             get {
                 Rect result = new Rect();
@@ -34,7 +34,7 @@ namespace Combustion
 
 		#region Unity Methods
 
-		void Awake() {
+		private void Awake() {
             if (Instance != null)
             {
                 Debug.LogError("Multiple Bullet Boxes may be in the scene!", Instance);
@@ -51,7 +51,7 @@ namespace Combustion
             desiredSize = ren.size;
         }
 
-		void Update() {
+		private void Update() {
             HandlePositionAndSize();
         }
 
