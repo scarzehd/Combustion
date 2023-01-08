@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace Combustion
 {
-    public class BulletBox : MonoBehaviour {
+	using Utility;
+
+	public class BulletBox : MonoBehaviour {
         public static BulletBox Instance { get; private set; } = null;
 
         private SpriteRenderer ren;
@@ -55,42 +57,25 @@ namespace Combustion
 
 		#endregion
 
-		#region Utilities
-
-		private bool IsCloseEnough(Vector2 start, Vector2 desired, float snap) {
-            return Vector2.Distance(start, desired) < snap;
-        }
-
-        private Vector2 SmoothStepVector(Vector2 start, Vector2 desired, float time) {
-            float x, y;
-
-            x = Mathf.SmoothStep(start.x, desired.x, time);
-            y = Mathf.SmoothStep(start.y, desired.y, time);
-
-            return new Vector2(x, y);
-        }
-
-		#endregion
-
 		#region Private Methods
 
 		private void HandlePositionAndSize() {
             float t = (Time.time - startTime) / duration;
 
-			if (IsCloseEnough(transform.position, desiredPosition, snapThreshold))
+			if (VectorUtils.IsCloseEnough(transform.position, desiredPosition, snapThreshold))
             {
                 transform.position = desiredPosition;
             } else
             {
-                transform.position = SmoothStepVector(startPosition, desiredPosition, t);
+                transform.position = VectorUtils.SmoothStep(startPosition, desiredPosition, t);
             }
 
-            if (IsCloseEnough(ren.size, desiredSize, snapThreshold))
+            if (VectorUtils.IsCloseEnough(ren.size, desiredSize, snapThreshold))
             {
                 ren.size = desiredSize;
             } else
             {
-				ren.size = SmoothStepVector(startSize, desiredSize, t);
+				ren.size = VectorUtils.SmoothStep(startSize, desiredSize, t);
             }
         }
 
