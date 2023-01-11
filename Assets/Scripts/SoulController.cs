@@ -11,6 +11,9 @@ namespace Combustion
         [SerializeField] private float speed;
 		[SerializeField] private float bulletBoxPadding;
 
+		public float HP { get; private set; }
+		private float maxHP;
+
 		#region Unity Methods
 
 		private void OnEnable() {
@@ -77,6 +80,23 @@ namespace Combustion
 			newY = Mathf.Clamp(position.y, bulletBox.y + bulletBoxPadding, bulletBox.y + bulletBox.height - bulletBoxPadding);
 
 			transform.position = new Vector2(newX, newY);
+		}
+
+		private void Die() {
+
+		}
+
+		#endregion
+
+		#region Public Methods
+
+		public void TakeDamage(int damage) {
+			HP -= damage;
+
+			if (HP <= 0)
+			{
+				Die();
+			}
 		}
 
 		#endregion
