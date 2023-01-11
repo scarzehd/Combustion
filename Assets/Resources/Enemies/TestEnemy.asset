@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b530310e687b4884b9c1827d0996a5a0, type: 3}
-  m_Name: Test
+  m_Script: {fileID: 11500000, guid: b1afce10412c351488302ce9ca8b18ac, type: 3}
+  m_Name: TestEnemy
   m_EditorClassIdentifier: 
-  currentText: 
-  isDone: 0
+  hp: 1
+  charmHp: 10
+  sprite: {fileID: 0}
+  attacks:
+  - {fileID: 1929022345542362682, guid: c8b08a36ba10c7a429d2da00b6a5effd, type: 3}
