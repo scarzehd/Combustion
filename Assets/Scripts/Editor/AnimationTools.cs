@@ -8,10 +8,6 @@ using System.Linq;
 
 namespace Combustion.Editor
 {
-	public enum MovementMode {
-		Position,
-		Radius
-	}
 
     [EditorTool("Animation Tools")]
     public class AnimationTools : EditorTool
@@ -19,8 +15,6 @@ namespace Combustion.Editor
 		public float circleRadius;
 
 		public Vector3 position;
-
-		public MovementMode movementMode;
 
 		public override void OnActivated() {
 			circleRadius = 1f;
@@ -49,27 +43,8 @@ namespace Combustion.Editor
 					gameObjects.Add(go);
 			}
 
-			Handles.BeginGUI();
-
-			using (new GUILayout.HorizontalScope())
-			{
-				using (new GUILayout.VerticalScope(EditorStyles.helpBox))
-				{
-					movementMode = (MovementMode)EditorGUILayout.EnumPopup(movementMode);
-				}
-			}
-
-			Handles.EndGUI();
-
-			switch (movementMode)
-			{
-				case MovementMode.Radius:
-					circleRadius = Handles.RadiusHandle(Quaternion.identity, position, circleRadius);
-					break;
-				case MovementMode.Position:
-					position = Handles.PositionHandle(position, Quaternion.identity);
-					break;
-			}
+			circleRadius = Handles.RadiusHandle(Quaternion.identity, position, circleRadius);
+			position = Handles.PositionHandle(position, Quaternion.identity);
 
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
