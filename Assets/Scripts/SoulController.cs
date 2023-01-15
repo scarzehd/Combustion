@@ -11,8 +11,10 @@ namespace Combustion
         [SerializeField] private float speed;
 		[SerializeField] private float bulletBoxPadding;
 
-		public float HP { get; private set; }
-		private float maxHP;
+		public float hp;
+		[SerializeField] private float maxHP;
+
+		[SerializeField] private BattleManager manager;
 
 		#region Unity Methods
 
@@ -83,7 +85,7 @@ namespace Combustion
 		}
 
 		private void Die() {
-
+			manager.state = BattleState.Lose;
 		}
 
 		#endregion
@@ -91,9 +93,9 @@ namespace Combustion
 		#region Public Methods
 
 		public void TakeDamage(int damage) {
-			HP -= damage;
+			hp -= damage;
 
-			if (HP <= 0)
+			if (hp <= 0)
 			{
 				Die();
 			}

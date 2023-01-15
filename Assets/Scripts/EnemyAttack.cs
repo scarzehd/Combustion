@@ -11,10 +11,10 @@ namespace Combustion
         [SerializeField] private int numPatterns;
 
 		//this is virtual so you can change the spawning conditions of the attack
-		protected virtual void Awake() {
+		protected void Awake() {
 			TurnFinished = false;
 
-			int patternIndex = Random.Range(0, numPatterns);
+			int patternIndex = Random.Range(0, numPatterns - 1);
 			GetComponent<Animator>().SetInteger("Pattern", patternIndex);
 		}
 

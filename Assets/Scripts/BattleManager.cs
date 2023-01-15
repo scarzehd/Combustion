@@ -18,7 +18,7 @@ namespace Combustion
         public BattleState state;
         [SerializeField] private Enemy[] enemies;
         private bool enemyActed;
-        private List<GameObject> attacks;
+        [SerializeField] private List<GameObject> attacks;
 
         [SerializeField] private SoulController player;
 
@@ -30,7 +30,7 @@ namespace Combustion
 		}
 
 		private void Update() {
-			if (player.HP <= 0)
+			if (player.hp <= 0)
 				state = BattleState.Lose;
 
 			switch (state)
@@ -48,17 +48,18 @@ namespace Combustion
                     {
                         player.gameObject.SetActive(true);
 
-                        foreach (Enemy enemy in enemies)
-                        {
-                            int attackIndex = Random.Range(0, enemy.attacks.Length);
-                            
-                            attacks.Add(Instantiate(enemy.attacks[attackIndex], Vector3.zero, Quaternion.identity));
-                        }
+						enemyActed = true;
 
-                        enemyActed = true;
+						foreach (Enemy enemy in enemies)
+                        {
+                            int attackIndex = Random.Range(0, enemy.attacks.Length - 1);
+
+							attacks.Add(Instantiate(enemy.attacks[attackIndex], Vector3.zero, Quaternion.identity));
+                        }
                     } else
                     {
                         bool enemyFinished = true;
+
                         foreach (GameObject attack in attacks)
                         {
                             if (!attack.GetComponent<EnemyAttack>().TurnFinished)
@@ -89,6 +90,8 @@ namespace Combustion
             {
                 Destroy(go);
             }
+
+            attacks = new List<GameObject>();
 
             enemyActed = false;
             state = BattleState.EndTurn;

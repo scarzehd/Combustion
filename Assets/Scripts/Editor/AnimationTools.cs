@@ -17,8 +17,10 @@ namespace Combustion.Editor
 
 		public Vector3 position;
 
+		public Quaternion rotation;
+
 		public override void OnActivated() {
-			circleRadius = 1f;
+			rotation = Quaternion.identity;
 
 			GameObject[] gameObjects = Selection.GetFiltered<GameObject>(SelectionMode.TopLevel);
 
@@ -46,16 +48,15 @@ namespace Combustion.Editor
 
 			EditorGUI.BeginChangeCheck();
 
-			circleRadius = Handles.RadiusHandle(Quaternion.identity, position, circleRadius);
-			position = Handles.PositionHandle(position, Quaternion.identity);
+			Handles.TransformHandle(ref position, ref rotation, ref circleRadius);
 
 			if (EditorGUI.EndChangeCheck())
 			{
 				for (int i = 0; i < gameObjects.Count; i++)
 				{
 					Vector2 pos = new Vector2(
-						position.x + circleRadius * Mathf.Cos(i * 2 * Mathf.PI / gameObjects.Count),
-						position.y + circleRadius * Mathf.Sin(i * 2 * Mathf.PI / gameObjects.Count)
+						position.x + circleRadius * Mathf.Cos((i * 2 * Mathf.PI / gameObjects.Count) + rotation.eulerAngles.z * Mathf.Deg2Rad),
+						position.y + circleRadius * Mathf.Sin((i * 2 * Mathf.PI / gameObjects.Count) + rotation.eulerAngles.z * Mathf.Deg2Rad)
 					);
 
 					Undo.RecordObject(gameObjects[i].transform, "Circle");

@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace Combustion
 {
-    public class FloweyAttack : EnemyAttack
+    public class FloweyAttack : MonoBehaviour
     {
-		protected override void Awake() {
-			base.Awake();
-
+		protected void Awake() {
 			GameObject go = GameObject.FindGameObjectsWithTag("Player")[0];
 
 			transform.position = go.transform.position;
