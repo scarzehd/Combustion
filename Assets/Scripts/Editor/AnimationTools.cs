@@ -3,9 +3,6 @@ using UnityEditor;
 using UnityEngine;
 
 using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using Unity.VisualScripting;
 
 namespace Combustion.Editor
 {
@@ -61,7 +58,7 @@ namespace Combustion.Editor
 
 					Undo.RecordObject(gameObjects[i].transform, "Circle");
 
-					if (gameObjects[i].IsPrefabInstance())
+					if (PrefabUtility.IsPartOfPrefabInstance(gameObjects[i]))
 						PrefabUtility.RecordPrefabInstancePropertyModifications(gameObjects[i].transform);
 
 					gameObjects[i].transform.position = pos;

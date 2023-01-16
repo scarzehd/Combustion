@@ -74,6 +74,9 @@ namespace Combustion
                     player.gameObject.SetActive(false);
                     state = BattleState.Start;
                     break;
+                case BattleState.Lose:
+
+                    break;
             }
 		}
 
@@ -95,6 +98,24 @@ namespace Combustion
 
             enemyActed = false;
             state = BattleState.EndTurn;
+        }
+
+		#endregion
+
+		#region Public Methds
+
+        public void Lose() {
+            switch (state)
+            {
+                case BattleState.PlayerTurn:
+                    EndPlayerTurn();
+                    break;
+                case BattleState.EnemyTurn:
+                    EndEnemyTurn();
+                    break;
+            }
+
+            state = BattleState.Lose;
         }
 
 		#endregion

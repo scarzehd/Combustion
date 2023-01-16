@@ -85,7 +85,7 @@ namespace Combustion
 		}
 
 		private void Die() {
-			manager.state = BattleState.Lose;
+			manager.Lose();
 		}
 
 		#endregion
