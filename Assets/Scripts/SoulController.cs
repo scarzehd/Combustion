@@ -6,6 +6,7 @@ namespace Combustion
     public class SoulController : MonoBehaviour
     {
         private Rigidbody2D rb;
+		private Animator anim;
         private float x, y;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private float speed;
@@ -16,6 +17,9 @@ namespace Combustion
 
 		[SerializeField] private BattleManager manager;
 
+		private float invulnTime;
+		[SerializeField] private float maxInvulnTime;
+
 		#region Unity Methods
 
 		private void OnEnable() {
@@ -24,11 +28,13 @@ namespace Combustion
 
 		private void Start() {
 			rb = GetComponent<Rigidbody2D>();
+			anim = GetComponent<Animator>();
 		}
 
 		private void Update() {
 			GetInput();
 			ConstrainPosition();
+			HandleAnimations();
 		}
 
 		private void FixedUpdate() {
@@ -88,16 +94,32 @@ namespace Combustion
 			manager.Lose();
 		}
 
+		private void HandleAnimations() {
+			if (invulnTime > 0)
+			{
+				anim.SetBool("Invulnerable", true);
+				invulnTime -= Time.deltaTime;
+			} else
+			{
+				anim.SetBool("Invulnerable", false);
+			}
+		}
+
 		#endregion
 
 		#region Public Methods
 
 		public void TakeDamage(int damage) {
-			hp -= damage;
-
-			if (hp <= 0)
+			if (this.invulnTime <= 0)
 			{
-				Die();
+				hp -= damage;
+
+				if (hp <= 0)
+				{
+					Die();
+				}
+
+				this.invulnTime = maxInvulnTime;
 			}
 		}
 
