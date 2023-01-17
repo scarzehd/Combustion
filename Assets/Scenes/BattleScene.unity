@@ -738,6 +738,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5378e5d27ebef354fbd61b4ac432b85b, type: 2}
   attacks: []
   player: {fileID: 1108268337}
+  bulletBox: {fileID: 1314204959}
 --- !u!4 &799891632
 Transform:
   m_ObjectHideFlags: 0
@@ -1404,6 +1405,10 @@ MonoBehaviour:
   maxHP: 20
   manager: {fileID: 799891631}
   maxInvulnTime: 0.5
+  deathTime: 2.5
+  deathShakePower: 0.07
+  deathParticleDelayTime: 1
+  deathParticleSystem: {fileID: 7703549005577240883, guid: 82414fdb308384b4db188cbf19383417, type: 3}
 --- !u!114 &1108268338
 MonoBehaviour:
   m_ObjectHideFlags: 0

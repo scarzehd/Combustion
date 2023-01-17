@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Combustion
 {
@@ -19,6 +21,13 @@ namespace Combustion
 
 		private float invulnTime;
 		[SerializeField] private float maxInvulnTime;
+
+		[SerializeField] private float deathTime;
+		[SerializeField] private float deathShakePower;
+		[SerializeField] private float deathParticleDelayTime;
+		[SerializeField] private GameObject deathParticleSystem;
+		private float deathShakeFadeTime;
+		private Vector3 deathStartPosition;
 
 		#region Unity Methods
 
@@ -90,8 +99,38 @@ namespace Combustion
 			transform.position = new Vector2(newX, newY);
 		}
 
-		private void Die() {
+		private IEnumerator Die() {
 			manager.Lose();
+
+			deathStartPosition = transform.position;
+
+			float deathCounter = deathTime;
+
+			deathShakeFadeTime = deathShakePower / deathTime;
+
+			float currentShakePower = 0f;
+
+			while (deathCounter > 0)
+			{
+				transform.position = deathStartPosition;
+
+				deathCounter -= Time.deltaTime;
+
+				float xAmount = Random.Range(-1f, 1f) * currentShakePower;
+				float yAmount = Random.Range(-1f, 1f) * currentShakePower;
+
+				transform.position += new Vector3(xAmount, yAmount, 0);
+
+				currentShakePower = Mathf.MoveTowards(currentShakePower, deathShakePower, deathShakeFadeTime * Time.deltaTime);
+
+				yield return null;
+			}
+
+			yield return new WaitForSeconds(deathParticleDelayTime);
+
+			GetComponent<SpriteRenderer>().enabled = false;
+
+			Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
 		}
 
 		private void HandleAnimations() {
@@ -110,16 +149,16 @@ namespace Combustion
 		#region Public Methods
 
 		public void TakeDamage(int damage) {
-			if (this.invulnTime <= 0)
+			if (invulnTime <= 0)
 			{
 				hp -= damage;
 
 				if (hp <= 0)
 				{
-					Die();
+					StartCoroutine(Die());
 				}
 
-				this.invulnTime = maxInvulnTime;
+				invulnTime = maxInvulnTime;
 			}
 		}
 

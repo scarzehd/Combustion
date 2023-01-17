@@ -21,6 +21,7 @@ namespace Combustion
         [SerializeField] private List<GameObject> attacks;
 
         [SerializeField] private SoulController player;
+        [SerializeField] private BulletBox bulletBox;
 
 		#region Unity Methods
 
@@ -112,6 +113,7 @@ namespace Combustion
                     break;
                 case BattleState.EnemyTurn:
                     EndEnemyTurn();
+                    bulletBox.gameObject.SetActive(false);
                     break;
             }
 
