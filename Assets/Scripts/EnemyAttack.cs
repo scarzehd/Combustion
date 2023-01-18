@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Combustion
 {
+	//Deprecated
     public class EnemyAttack : MonoBehaviour
     {
         public bool TurnFinished { get; private set; }
