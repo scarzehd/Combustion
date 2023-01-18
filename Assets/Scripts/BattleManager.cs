@@ -18,10 +18,13 @@ namespace Combustion
         public BattleState state;
         [SerializeField] private Enemy[] enemies;
         private bool enemyActed;
-        [SerializeField] private List<GameObject> attacks;
+        private List<GameObject> attacks;
 
         [SerializeField] private SoulController player;
         [SerializeField] private BulletBox bulletBox;
+
+        [SerializeField] private Rect dialogBoxSize;
+        [SerializeField] private float dialogBoxTransitionTime;
 
 		#region Unity Methods
 

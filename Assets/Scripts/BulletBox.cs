@@ -32,6 +32,15 @@ namespace Combustion
             }
         }
 
+        public bool IsMoving {
+            get {
+                if (VectorUtils.IsCloseEnough(startPosition, desiredPosition, snapThreshold) && VectorUtils.IsCloseEnough(startSize, desiredSize, snapThreshold))
+                    return true;
+
+                return false;
+            }
+        }
+
 		#region Unity Methods
 
 		private void Awake() {
@@ -98,6 +107,10 @@ namespace Combustion
             desiredSize = size;
             duration = time;
             startTime = Time.time;
+        }
+
+        public void SetShape(Rect shape, float time) {
+            SetShape(new Vector2(shape.x, shape.y), new Vector2(shape.width, shape.height), time);
         }
 
         #endregion

@@ -10,7 +10,6 @@ namespace Combustion
 
         [SerializeField] private int numPatterns;
 
-		//this is virtual so you can change the spawning conditions of the attack
 		protected void Awake() {
 			TurnFinished = false;
 
