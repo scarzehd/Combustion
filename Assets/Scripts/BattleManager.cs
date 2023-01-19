@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion
+namespace Combustion.Battle
 {
     public enum BattleState {
         Start,
@@ -15,26 +13,29 @@ namespace Combustion
 
     public class BattleManager : MonoBehaviour
     {
+        public static BattleManager instance;
+
         public BattleState state;
         [SerializeField] private Enemy[] enemies;
-        private bool enemyActed;
-        private List<GameObject> attacks;
-
-        [SerializeField] private SoulController player;
-        [SerializeField] private BulletBox bulletBox;
+/*        private bool enemyActed;
+        private List<GameObject> attacks;*/
 
         [SerializeField] private Rect dialogBoxSize;
         [SerializeField] private float dialogBoxTransitionTime;
 
+        public float attackTime;
+
 		#region Unity Methods
 
 		private void Start() {
+            if (instance == null)
+                instance = this;
+
             state = BattleState.Start;
-            enemyActed = false;
 		}
 
 		private void Update() {
-			if (player.hp <= 0)
+			if (SoulController.instance.hp <= 0)
 				state = BattleState.Lose;
 
 			switch (state)
@@ -46,19 +47,21 @@ namespace Combustion
                     EndPlayerTurn();
                     break;
                 case BattleState.EnemyTurn:
-                    if (enemies.Length <= 0)
+                    EnemyTurn();
+
+/*                    if (enemies.Length <= 0)
                         EndEnemyTurn();
                     else if (!enemyActed)
                     {
                         player.gameObject.SetActive(true);
 
-						enemyActed = true;
+                        enemyActed = true;
 
-						foreach (Enemy enemy in enemies)
+                        foreach (Enemy enemy in enemies)
                         {
                             int attackIndex = Random.Range(0, enemy.attacks.Length - 1);
 
-							attacks.Add(Instantiate(enemy.attacks[attackIndex], Vector3.zero, Quaternion.identity));
+                            attacks.Add(Instantiate(enemy.attacks[attackIndex], Vector3.zero, Quaternion.identity));
                         }
                     } else
                     {
@@ -72,10 +75,10 @@ namespace Combustion
 
                         if (enemyFinished)
                             EndEnemyTurn();
-                    }
-					break;
+                    }*/
+                    break;
                 case BattleState.EndTurn:
-                    player.gameObject.SetActive(false);
+                    SoulController.instance.gameObject.SetActive(false);
                     state = BattleState.Start;
                     break;
                 case BattleState.Lose:
@@ -93,7 +96,7 @@ namespace Combustion
         }
 
         private void EndEnemyTurn() {
-            foreach (GameObject go in attacks)
+/*            foreach (GameObject go in attacks)
             {
                 Destroy(go);
             }
@@ -101,7 +104,11 @@ namespace Combustion
             attacks = new List<GameObject>();
 
             enemyActed = false;
-            state = BattleState.EndTurn;
+            state = BattleState.EndTurn;*/
+        }
+
+        private void EnemyTurn() {
+
         }
 
 		#endregion
@@ -116,7 +123,7 @@ namespace Combustion
                     break;
                 case BattleState.EnemyTurn:
                     EndEnemyTurn();
-                    bulletBox.gameObject.SetActive(false);
+                    BulletBox.instance.gameObject.SetActive(false);
                     break;
             }
 

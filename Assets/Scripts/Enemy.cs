@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion
+namespace Combustion.Battle
 {
     [CreateAssetMenu(fileName = "New Enemy", menuName = "Combustion/New Enemy")]
     public class Enemy : ScriptableObject
@@ -12,6 +10,6 @@ namespace Combustion
 
         public Sprite sprite;
 
-        public GameObject[] attacks;
+        public IAttack[] attacks;
     }
 }

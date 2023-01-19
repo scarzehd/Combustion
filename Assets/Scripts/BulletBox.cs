@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion
+namespace Combustion.Battle
 {
-	using Utility;
+    using Util;
 
 	public class BulletBox : MonoBehaviour {
-        public static BulletBox Instance { get; private set; } = null;
+        public static BulletBox instance;
 
         private SpriteRenderer ren;
 
@@ -44,13 +42,13 @@ namespace Combustion
 		#region Unity Methods
 
 		private void Awake() {
-            if (Instance != null)
+            if (instance != null)
             {
-                Debug.LogError("Multiple Bullet Boxes may be in the scene!", Instance);
+                Debug.LogError("Multiple Bullet Boxes may be in the scene!", instance);
                 return;
             }
 
-            Instance = this;
+            instance = this;
 
             ren = GetComponent<SpriteRenderer>();
 

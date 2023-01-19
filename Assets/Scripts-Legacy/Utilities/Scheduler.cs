@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion.Utility
+namespace Combustion.Util
 {
     public class Scheduler : MonoBehaviour
     {

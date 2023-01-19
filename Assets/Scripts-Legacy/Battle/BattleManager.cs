@@ -10,7 +10,7 @@ namespace Combustion.Battle
 	using UI;
 
 	using Player;
-	using Utility;
+	using Util;
 
 	public class BattleManager : MonoBehaviour
     {

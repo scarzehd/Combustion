@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion.Battle
+using Combustion.Battle;
+
+public class AttackTest : IAttack
 {
-	public class AttackTest : AttackController
-	{
-		public override void UpdateAttack() {
+	public void UpdateAttack() {
 			
-		}
 	}
 }

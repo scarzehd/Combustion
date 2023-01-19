@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion
-{
-    public class EnemyProjectile : MonoBehaviour
-    {
+namespace Combustion.Battle {
+
+	public class EnemyProjectile : MonoBehaviour
+	{
 		public int damage;
 
 		public float time;

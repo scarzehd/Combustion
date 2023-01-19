@@ -9,7 +9,7 @@ namespace Combustion.UI
     using Battle;
     using Combustion.Dialog;
     using System;
-    using Utility;
+    using Util;
 
     public class MenuManager : MonoBehaviour
     {

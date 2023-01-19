@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-namespace Combustion
+namespace Combustion.Battle
 {
     public class SoulController : MonoBehaviour
     {
+		public static SoulController instance;
+
         private Rigidbody2D rb;
 		private Animator anim;
         private float x, y;
@@ -36,6 +37,9 @@ namespace Combustion
 		}
 
 		private void Start() {
+			if (instance == null)
+				instance = this;
+
 			rb = GetComponent<Rigidbody2D>();
 			anim = GetComponent<Animator>();
 		}
@@ -91,7 +95,7 @@ namespace Combustion
 		private void ConstrainPosition() {
 			float newX, newY;
 			Vector2 position = transform.position;
-			Rect bulletBox = BulletBox.Instance.Bounds;
+			Rect bulletBox = BulletBox.instance.Bounds;
 
 			newX = Mathf.Clamp(position.x, bulletBox.x + bulletBoxPadding, bulletBox.x + bulletBox.width - bulletBoxPadding);
 			newY = Mathf.Clamp(position.y, bulletBox.y + bulletBoxPadding, bulletBox.y + bulletBox.height - bulletBoxPadding);
