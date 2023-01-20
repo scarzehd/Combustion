@@ -1,9 +1,10 @@
 using UnityEngine;
 
-namespace Combustion.Battle
+namespace Combustion
 {
     public enum BattleState {
         Start,
+        PreTurn,
         PlayerTurn,
         EnemyTurn,
         EndTurn,
@@ -11,14 +12,17 @@ namespace Combustion.Battle
         Lose
     }
 
-    public class BattleManager : MonoBehaviour
+    public abstract class BattleManager : MonoBehaviour
     {
-        public static BattleManager instance;
+		public Enemy[] enemies;
+
+        public IAttack[] currentAttacks;
+
+		public static BattleManager instance;
 
         public BattleState state;
-        [SerializeField] private Enemy[] enemies;
-/*        private bool enemyActed;
-        private List<GameObject> attacks;*/
+
+        public Battle battle;
 
         [SerializeField] private Rect dialogBoxSize;
         [SerializeField] private float dialogBoxTransitionTime;
@@ -31,7 +35,9 @@ namespace Combustion.Battle
             if (instance == null)
                 instance = this;
 
-            state = BattleState.Start;
+            state = BattleState.PreTurn;
+
+            Init();
 		}
 
 		private void Update() {
@@ -40,11 +46,12 @@ namespace Combustion.Battle
 
 			switch (state)
             {
-                case BattleState.Start:
-                    state = BattleState.PlayerTurn;
-                    break;
+                case BattleState.PreTurn:
+					PreRound();
+					state = BattleState.PlayerTurn;
+					break;
                 case BattleState.PlayerTurn:
-                    EndPlayerTurn();
+					PlayerTurn();
                     break;
                 case BattleState.EnemyTurn:
                     EnemyTurn();
@@ -79,10 +86,9 @@ namespace Combustion.Battle
                     break;
                 case BattleState.EndTurn:
                     SoulController.instance.gameObject.SetActive(false);
-                    state = BattleState.Start;
+                    state = BattleState.PreTurn;
                     break;
                 case BattleState.Lose:
-
                     break;
             }
 		}
@@ -92,23 +98,10 @@ namespace Combustion.Battle
 		#region Private Methods
 
         private void EndPlayerTurn() {
-            state = BattleState.EnemyTurn;
+            
         }
 
         private void EndEnemyTurn() {
-/*            foreach (GameObject go in attacks)
-            {
-                Destroy(go);
-            }
-
-            attacks = new List<GameObject>();
-
-            enemyActed = false;
-            state = BattleState.EndTurn;*/
-        }
-
-        private void EnemyTurn() {
-
         }
 
 		#endregion
@@ -129,6 +122,18 @@ namespace Combustion.Battle
 
             state = BattleState.Lose;
         }
+
+		#endregion
+
+		#region Protected Methods
+
+        protected virtual void Init() { }
+
+        protected virtual void PreRound() { }
+
+        protected virtual void PlayerTurn() { }
+
+		protected virtual void EnemyTurn() { }
 
 		#endregion
 	}

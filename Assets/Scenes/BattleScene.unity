@@ -268,7 +268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 799891632}
-  - component: {fileID: 799891631}
+  - component: {fileID: 799891633}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -276,30 +276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &799891631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799891630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240502c5ff823804ea795482e103ace2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  enemies:
-  - {fileID: 11400000, guid: 5378e5d27ebef354fbd61b4ac432b85b, type: 2}
-  player: {fileID: 1108268337}
-  bulletBox: {fileID: 1314204959}
-  dialogBoxSize:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  dialogBoxTransitionTime: 0
 --- !u!4 &799891632
 Transform:
   m_ObjectHideFlags: 0
@@ -315,6 +291,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &799891633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799891630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b737de523d739684dabdad34567ffa49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 902510680009597333, guid: 3f0a9c3bff4c3c948b9a708af26a62ba, type: 3}
 --- !u!1 &894230913
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +509,7 @@ MonoBehaviour:
   bulletBoxPadding: 0.17
   hp: 20
   maxHP: 20
-  manager: {fileID: 799891631}
+  manager: {fileID: 0}
   maxInvulnTime: 0.5
   deathTime: 2.5
   deathShakePower: 0.07

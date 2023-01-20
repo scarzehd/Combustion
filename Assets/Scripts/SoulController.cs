@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Combustion.Battle
+namespace Combustion
 {
     public class SoulController : MonoBehaviour
     {
