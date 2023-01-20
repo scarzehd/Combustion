@@ -1,15 +1,12 @@
 using UnityEngine;
 
-namespace Combustion.Battle
+namespace Combustion
 {
-    [CreateAssetMenu(fileName = "New Enemy", menuName = "Combustion/New Enemy")]
-    public class Enemy : ScriptableObject
+    public class Enemy : MonoBehaviour
     {
         public int hp;
         public int charmHp;
 
         public Sprite sprite;
-
-        public IAttack[] attacks;
     }
 }

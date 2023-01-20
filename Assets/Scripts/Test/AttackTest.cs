@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Combustion.Battle;
+using Combustion;
 
 public class AttackTest : IAttack
 {
-	public void UpdateAttack() {
-			
-	}
+	public void StartAttack() { }
+
+	public void UpdateAttack() { }
 }

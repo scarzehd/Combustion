@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-using Combustion.Battle;
+using Combustion;
 
 public class BulletBoxTest : MonoBehaviour
 {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Combustion.Battle
+namespace Combustion
 {
     using Util;
 

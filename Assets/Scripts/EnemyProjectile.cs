@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combustion.Battle {
+namespace Combustion {
 
 	public class EnemyProjectile : MonoBehaviour
 	{
